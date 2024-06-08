@@ -39,7 +39,7 @@ const Dashboard: React.FC = () => {
         <ul>
           {slots.map((slot) => (
             <li key={slot.id}>
-              {slot.start} - {slot.user_id} - {slot.wm_id}
+              {slot.start} - {slot.user_id} - Стиралка номер {slot.wm_id}
             </li>
           ))}
         </ul>

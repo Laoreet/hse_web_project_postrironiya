@@ -37,7 +37,7 @@ const Dashboard: React.FC = () => {
         <ul>
           {wms.map((wm) => (
             <li key={wm.id}>
-              {wm.dormitory_id} - {wm.floor} - {wm.is_working}
+              ID {wm.dormitory_id} - Этаж {wm.floor} - {Boolean(wm.is_working) ? 'Работает' : 'Не работает'}
             </li>
           ))}
         </ul>
