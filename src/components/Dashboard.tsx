@@ -71,10 +71,10 @@ const Dashboard: React.FC = () => {
   // Render the data here
 
   return (
-    <div>
+    <div className='container'>
       <h1>Dashboard</h1>
       {/* Add your UI components to display the data */}
-      <div>
+      <div className='dashboard'>
         <h2>Dormitories</h2>
         <ul>
           {dormitories.map((dormitory) => (
@@ -84,7 +84,7 @@ const Dashboard: React.FC = () => {
           ))}
         </ul>
       </div>
-      <div>
+      <div className='dashboard'>
         <h2>Slots</h2>
         <ul>
           {slots.map((slot) => (
@@ -94,7 +94,7 @@ const Dashboard: React.FC = () => {
           ))}
         </ul>
       </div>
-      <div>
+      <div className='dashboard'>
         <h2>Users</h2>
         <ul>
           {users.map((user) => (
@@ -104,7 +104,7 @@ const Dashboard: React.FC = () => {
           ))}
         </ul>
       </div>
-      <div>
+      <div className='dashboard'>
         <h2>WM</h2>
         <ul>
           {wms.map((wm) => (

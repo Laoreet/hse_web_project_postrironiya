@@ -1,15 +1,29 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import {Route, Routes} from "react-router-dom"
+import './styles.css'
+import {Route, Routes, createBrowserRouter} from "react-router-dom"
 import DataList from './components/DataList';
 import Dashboard from './components/Dashboard';
+import ErrorPage from './components/Error-page';
+import Login from './components/Login';
+import Register from './components/Register';
+import Dormitories from './components/Dormitories';
+import Slots from './components/Slots';
+import WashingMachines from './components/WashingMachines';
+
 
 function App() {
   return (
-    <>
-      <Dashboard />
-    </>
+    <Routes>
+      <Route path="/dashboard" element={<Dashboard />}/>
+      <Route path="/login" element={<Login />}/>
+      <Route path="/register" element={<Register />}/>
+      <Route path="/dormitories" element={<Dormitories />}/>
+      <Route path="/slots" element={<Slots />}/>
+      <Route path="/washmachines" element={<WashingMachines />}/>
+      <Route path="*" element={<ErrorPage />}/>
+    </Routes>
   );
 }
 
