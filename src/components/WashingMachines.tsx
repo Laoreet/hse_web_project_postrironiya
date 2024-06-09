@@ -25,9 +25,9 @@ const Dashboard: React.FC = () => {
   }, []);
 
   const [wms, setWms] = useState<IWM[]>([]);
+  const [dormitories, setDormitories] = useState<{ [id: number]: IWM[] }>({});
 
   const dbRef = ref(db);
-
 
   useEffect(() => {
     const wmsRef = ref(db, 'WM');
@@ -40,6 +40,15 @@ const Dashboard: React.FC = () => {
         }
       }
       setWms(wmsList);
+
+      const dormitoriesObj: { [id: number]: IWM[] } = {};
+      wmsList.forEach((wm) => {
+        if (!dormitoriesObj[wm.dormitory_id]) {
+          dormitoriesObj[wm.dormitory_id] = [];
+        }
+        dormitoriesObj[wm.dormitory_id].push(wm);
+      });
+      setDormitories(dormitoriesObj);
     });
 
     return () => {
@@ -47,21 +56,24 @@ const Dashboard: React.FC = () => {
     };
   }, []);
 
-  // Render the data here
-
   return (
-    <div className='container'>
-      <h1>Стиральные машины</h1>
-      <div className='dashboard'>
-        <h2>Список стиральных машин</h2>
-        <ul>
-          {wms.map((wm) => (
-            <li key={wm.id}>
-              {adress || "Не указано"} - Этаж {wm.floor} - {Boolean(wm.is_working) ? 'Работает' : 'Не работает'}
-            </li>
-          ))}
-        </ul>
-      </div>
+    <div className="WMList">
+      <h1>Список стиральных машин</h1>
+      {Object.keys(dormitories).map((dormitoryId) => (
+        <div key={dormitoryId}>
+          <h2>{adress || "Не указан"}</h2>
+          <ul>
+            {dormitories[Number(dormitoryId)].map((wm) => (
+              <li key={wm.id}>
+                <span>Этаж: {wm.floor}</span>
+                <span className={`status ${wm.is_working === 1 ? 'working' : 'not-working'}`}>
+                  {wm.is_working === 1 ? 'Работает' : 'Не работает'}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
     </div>
   );
 };
