@@ -2,8 +2,22 @@ import React, { useEffect, useState } from 'react';
 import { IDormitory, ISlot, IUser, IWM } from '../interfaces';
 import { db } from '../lib/firebase';
 import { getDatabase, ref, child, get, onValue, off } from "firebase/database";
+import { useNavigate } from 'react-router-dom';
 
 const Dashboard: React.FC = () => {
+
+  const [user, setUser] = useState<any>(null);
+  const navigator = useNavigate();
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    } else {
+      navigator("/login"); // Перенаправляем на страницу авторизации, если пользователь не авторизован
+    }
+  }, []);
+
   const [dormitories, setDormitories] = useState<IDormitory[]>([]);
   const [slots, setSlots] = useState<ISlot[]>([]);
   const [users, setUsers] = useState<IUser[]>([]);

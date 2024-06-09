@@ -11,6 +11,7 @@ import Register from './components/Register';
 import Dormitories from './components/Dormitories';
 import Slots from './components/Slots';
 import WashingMachines from './components/WashingMachines';
+import Profile from './components/Profile';
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
       <Route path="/dormitories" element={<Dormitories />}/>
       <Route path="/slots" element={<Slots />}/>
       <Route path="/washmachines" element={<WashingMachines />}/>
+      <Route path='/profile' element={<Profile />} />
       <Route path="*" element={<ErrorPage />}/>
     </Routes>
   );

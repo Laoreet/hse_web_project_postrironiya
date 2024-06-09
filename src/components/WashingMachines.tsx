@@ -2,8 +2,28 @@ import React, { useEffect, useState } from 'react';
 import { IDormitory, ISlot, IUser, IWM } from '../interfaces';
 import { db } from '../lib/firebase';
 import { getDatabase, ref, child, get, onValue, off } from "firebase/database";
+import { useNavigate } from 'react-router-dom';
+import { getDormitoryAdressById } from '../lib/firebase-service';
 
 const Dashboard: React.FC = () => {
+
+  const [user, setUser] = useState<any>(null);
+  const [adress, setAdress] = useState<string | null>("");
+  const navigator = useNavigate();
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      const userData = JSON.parse(storedUser);
+        setUser(userData);
+      getDormitoryAdressById(userData.dormitory).then((adress) => {
+        setAdress(adress);
+      });
+    } else {
+      navigator("/login"); // Перенаправляем на страницу авторизации, если пользователь не авторизован
+    }
+  }, []);
+
   const [wms, setWms] = useState<IWM[]>([]);
 
   const dbRef = ref(db);
@@ -37,7 +57,7 @@ const Dashboard: React.FC = () => {
         <ul>
           {wms.map((wm) => (
             <li key={wm.id}>
-              ID {wm.dormitory_id} - Этаж {wm.floor} - {Boolean(wm.is_working) ? 'Работает' : 'Не работает'}
+              {adress || "Не указано"} - Этаж {wm.floor} - {Boolean(wm.is_working) ? 'Работает' : 'Не работает'}
             </li>
           ))}
         </ul>
