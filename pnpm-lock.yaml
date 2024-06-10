@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@emailjs/browser':
+    specifier: ^4.3.3
+    version: 4.3.3
   '@testing-library/jest-dom':
     specifier: ^5.17.0
     version: 5.17.0
@@ -26,6 +29,9 @@ dependencies:
   '@types/react-dom':
     specifier: ^18.3.0
     version: 18.3.0
+  bootstrap-icons:
+    specifier: ^1.11.3
+    version: 1.11.3
   firebase:
     specifier: ^10.12.2
     version: 10.12.2
@@ -1724,6 +1730,11 @@ packages:
       colorspace: 1.1.4
       enabled: 2.0.0
       kuler: 2.0.0
+    dev: false
+
+  /@emailjs/browser@4.3.3:
+    resolution: {integrity: sha512-ltpt2S/WVREIBXptxYAVYBvXb2O6yTUYiRUWF8OLikMxlmiGsIgKpgHppikNd4Df0uAav7jCsQKcOJ3TJFUx5g==}
+    engines: {node: '>=14.0.0'}
     dev: false
 
   /@eslint-community/eslint-utils@4.4.0(eslint@8.57.0):
@@ -4391,6 +4402,10 @@ packages:
 
   /boolbase@1.0.0:
     resolution: {integrity: sha512-JZOSA7Mo9sNGB8+UjSgzdLtokWAky1zbztM3WRLCbZ70/3cTANmQmOdR7y2g+J0e2WXywy1yS468tY+IruqEww==}
+    dev: false
+
+  /bootstrap-icons@1.11.3:
+    resolution: {integrity: sha512-+3lpHrCw/it2/7lBL15VR0HEumaBss0+f/Lb6ZvHISn1mlK83jjFpooTLsMWbIjJMDjDjOExMsTxnXSIT4k4ww==}
     dev: false
 
   /boxen@5.1.2:
