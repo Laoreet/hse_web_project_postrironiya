@@ -1,0 +1,280 @@
+/* Логин, регистрация */
+form {
+    max-width: 400px;
+    margin: 5px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+    background-color: #f6f6f6;
+  }
+
+  .error {
+    color: red; /* добавлен цвет ошибки */
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
+  input {
+    width: 90%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    border-color: #333;
+    font-size: 16px;
+  }
+
+  select {
+    width: 90%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    border-color: #333;
+    font-size: 16px;
+  }
+
+  select:focus {
+    border-color: #337ab7; /* изменен цвет границы при фокусе */
+    box-shadow: 0 0 10px rgba(51, 122, 183, 0.5); /* добавлен эффект тени при фокусе */
+  }
+
+  
+  button[type='submit'] {
+    width: 90%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #333;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  button[type='submit']:hover {
+    background-color: #555;
+  }
+
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #e3e8ea; /* добавлен фон страницы */
+  }
+
+
+
+
+
+  /* Дашборд */
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .dashboard {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  .card {
+    flex: 1 1 300px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card h2 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .card ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  
+  .card li {
+    margin-bottom: 5px;
+    font-size: 16px;
+  }
+  
+  ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  ul li {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    font-size: 16px;
+  }
+  
+  ul li:last-child {
+    border-bottom: none;
+  }
+  
+  ul li:hover {
+    background-color: #f5f5f5;
+    cursor: pointer;
+  }
+
+    /* Навбар */
+
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 60px;
+    padding: 0 20px;
+    background-color: #333;
+    color: #fff;
+  }
+  
+  .navbar div {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .links {
+    display: flex;
+    align-items: center;
+  }
+  
+  .links a {
+    display: block;
+    padding: 10px 20px;
+    text-decoration: none;
+    font-size: 18px;
+    color: #fff;
+    transition: background-color 0.3s ease;
+    border-radius: 25%;
+  }
+  
+  .links a:hover {
+    background-color: #555;
+  }
+  
+  /* Профиль */
+
+  .profile-container {
+    max-width: 400px;
+    margin: 40px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+  }
+  
+  .profile-name {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333;
+  }
+  
+  .profile-info {
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #666;
+  }
+  
+  .profile-info::before {
+    content: "";
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    background-color: #3e3e3e;
+    border-radius: 50%;
+    vertical-align: middle;
+  }
+  
+  .logout-button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #333;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .logout-button:hover {
+    background-color: #555;
+  }
+  
+  /* Стиралки */
+
+  .WMList {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .WMList h1 {
+    margin-top: 0;
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .WMList ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .WMList li {
+    padding: 15px;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .WMList li:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .WMList li:last-child {
+    border-bottom: none;
+  }
+  
+  .WMList span {
+    font-size: 16px;
+    color: #666;
+    margin-right: 10px;
+  }
+  
+  .WMList span.status {
+    font-weight: bold;
+    color: #337ab7;
+  }
+  
+  .WMList span.status.working {
+    color: #2ecc71;
+  }
+  
+  .WMList span.status.not-working {
+    color: #e74c3c;
+  }
+  
