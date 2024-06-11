@@ -9,6 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const Dashboard: React.FC = () => {
 
+
   const [user, setUser] = useState<any>(null);
   const navigator = useNavigate();
   const [wms, setWms] = useState<IWM[]>([]);
@@ -34,7 +35,7 @@ const Dashboard: React.FC = () => {
     month = today.getMonth() + 1; // Месяцы начинаются с 0, поэтому добавляем 1
     year = today.getFullYear();
 
-    // Форматирование дня и месяца, чтобы добавить ведущий ноль, если число меньше 10
+    // Форматирование дня и месяца
     const formattedDay = day < 10 ? `0${day}` : `${day}`;
     const formattedMonth = month < 10 ? `0${month}` : `${month}`;
 
