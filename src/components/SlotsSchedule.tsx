@@ -21,7 +21,8 @@ const Dashboard: React.FC = () => {
   const [week, setWeek]= useState<string[]>([]);
   const [day_slots, setDaySlots] = useState<ISlot[]|null>([]);
 
-  useEffect(() => {
+  useEffect(() => { // 1
+    console.log('HOOK 1');
     const today = new Date();
     today.setMinutes(0);
     today.setHours(0);
@@ -70,7 +71,8 @@ const Dashboard: React.FC = () => {
   
   };
 
-  useEffect(() => {
+  useEffect(() => { // 2
+    console.log('HOOK 2');
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
         const userData = JSON.parse(storedUser);
@@ -85,91 +87,91 @@ const Dashboard: React.FC = () => {
     }
   }, []);
 
-  useEffect(()=> {
-   
-  })
+  useEffect(() => {
+    console.log('HOOK 3');
+    let prevWms = JSON.stringify(wms);
+    let prevSelectedOption = selectedOption;
+  
+    const fetchSlots = async () => {
+      const slots = await getSlotsByWMids(wms, selectedOption);
+      if (slots !== null) {
+        setSlots(slots);
+      }
+    };
+  
+    if (JSON.stringify(wms) !== prevWms || selectedOption !== prevSelectedOption) {
+      fetchSlots();
+    }
+  
+    return () => {
+      // cleanup code here
+    };
+  }, [wms, selectedOption]);
 
-  useEffect(()=> {
-    getSlotsByWMids(wms, selectedOption).then((slots) => {
-      if (slots!=null)
-      setSlots(slots);
-    });
-  })
-
-useEffect(() => {
-
-  let slotMat: [number, string[]][] = [];
-
-  let user_do_laundry: Boolean;
-  user_do_laundry=false;
-  wms.forEach((wm)=> {
-
-
-    let slots_wm: string[] = [];
-    time_arr.forEach((time)=>{
-
-      let busi_slot: Boolean;
-      busi_slot=false;
-      slots.forEach((slot)=>{
-
-        if (slot.start.substring(slot.start.length-5)==time && wm.id==slot.wm_id)
-          {slots_wm.push('grey');
-            busi_slot=true;
-            if (slot.user_id==user.mail){
-              if (busyslot==null)
-              
-                {console.log('llllllllll')
-              setBusySlotWM(wm.floor)
-              user_do_laundry=true;
-              setBusySlot(slot);}
-              else if (busyslot.start.substring(0, busyslot.start.length-6)!=selectedOption){
-                setBusySlotWM(wm.floor)
-              user_do_laundry=true;
-              setBusySlot(slot);
+  useEffect(() => {
+    console.log('HOOK 4');
+    let slotMat: [number, string[]][] = [];
+    let user_do_laundry: Boolean = false;
+  
+    const curDate = new Date(); // Объявляем переменную curDate внутри хука
+  
+    wms.forEach((wm) => {
+      let slots_wm: string[] = [];
+  
+      time_arr.forEach((time) => {
+        let busi_slot: Boolean = false;
+  
+        const timeParts = time.split(/[- :]/);
+        const hour = parseInt(timeParts[0], 10);
+        const minute = parseInt(timeParts[1], 10);
+        const day = new Date(selectedOption);
+        const date = new Date(day.getFullYear(), day.getMonth(), day.getDate(), hour, minute);
+  
+        slots.forEach((slot) => {
+          if (slot.start.substring(slot.start.length - 5) === time && wm.id === slot.wm_id) {
+            slots_wm.push('grey');
+            busi_slot = true;
+  
+            if (slot.user_id === user.mail) {
+              if (busyslot === null) {
+                setBusySlotWM(wm.floor);
+                user_do_laundry = true;
+                setBusySlot(slot);
+              } else if (busyslot.start.substring(0, busyslot.start.length - 6) !== selectedOption) {
+                setBusySlotWM(wm.floor);
+                user_do_laundry = true;
+                setBusySlot(slot);
               }
-
             }
           }
-           
-
-    })
-    const curDate = new Date();
-    //          console.log(curDate);
-    const timeParts = time.split(/[- :]/);
-  const hour = parseInt(timeParts[0], 10);
-  const minute = parseInt(timeParts[1], 10);
-  const day = new Date(selectedOption);
-  const date = new Date(day.getFullYear(), day.getMonth(), day.getDate(), hour, minute);
+        });
   
-  console.log(date);
-  if (curDate> date)
-            {
-              console.log('ldlld');
-              if (!busi_slot)
-              slots_wm.push('grey');}
-  else {
-    if (!busi_slot)
-    slots_wm.push('blue');}
+        if (curDate > date) {
+          if (!busi_slot) {
+            slots_wm.push('grey');
           }
-        
-  )
-
-  slotMat.push([wm.floor,slots_wm]);
-  setMatrix(slotMat);
-}
-)
-if (user_do_laundry==false ) {
-  console.log('--------------------------');
-  if (busyslot==null)
-  {setBusySlot(null);
-  setBusySlotWM(null);}
-  else if (busyslot.start.substring(0, busyslot.start.length-6)!=selectedOption){
-    setBusySlotWM(null);
-  setBusySlot(null);
-  }
-}
-
-})
+        } else {
+          if (!busi_slot) {
+            slots_wm.push('blue');
+          }
+        }
+      });
+  
+      slotMat.push([wm.floor, slots_wm]);
+    });
+  
+    setMatrix(slotMat);
+  
+    if (user_do_laundry === false) {
+      if (busyslot === null) {
+        setBusySlot(null);
+        setBusySlotWM(null);
+      } else if (busyslot.start.substring(0, busyslot.start.length - 6) !== selectedOption) {
+        setBusySlotWM(null);
+        setBusySlot(null);
+      }
+    }
+  }, [wms, slots, selectedOption, user]); // Добавляем curDate в массив зависимостей
 
 
 
