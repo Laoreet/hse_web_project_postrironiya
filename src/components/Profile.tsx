@@ -18,6 +18,9 @@ function Profile() {
   const [passwordError, setPasswordError] = useState("");
   const [showPasswordChangeForm, setShowPasswordChangeForm] = useState(false);
 
+  const [editedUser, setEditedUser] = useState<any>(null);
+  const [editedAdress, setEditedAdress] = useState<any>(null);
+
   const [showEditFirstName, setShowEditFirstName] = useState(false);
   const [showEditLastName, setShowEditLastName] = useState(false);
   const [showEditPatName, setShowEditPatName] = useState(false);
@@ -29,8 +32,12 @@ function Profile() {
     if (storedUser) {
         const userData = JSON.parse(storedUser);
         setUser(userData);
-      getDormitoryAdressById(userData.dormitory).then((adress) => {
+        setEditedUser(userData);
+        console.log('Загружаю общагу номер ', userData.dormitory);
+      getDormitoryAdressById(Number(userData.dormitory)).then((adress) => {
+        console.log(adress);
         setAdress(adress);
+        setEditedAdress(adress);
       });
     } else {
       navigator("/login"); // Перенаправляем на страницу авторизации, если пользователь не авторизован
@@ -77,17 +84,22 @@ function Profile() {
 
   const handleSaveChange = async (field: keyof typeof user) => {
     if (field === 'first_name' || field === 'last_name') {
-      if (!user[field].trim()) {
+      if (!editedUser[field].trim()) {
         alert('Имя и Фамилия не могут быть пустыми');
         return;
       }
     }
     try {
       const userRef = ref(db, `Users/${user.mail.replaceAll('.', ',')}`);
-      await update(userRef, {[field]: user[field]});
+      await update(userRef, {[field]: editedUser[field]});
       //alert("Изменения сохранены успешно!");
-      setUser({...user, [field]: user[field]});
+      user[field] = editedUser[field];
+      setUser({...user, [field]: editedUser[field]});
+      console.log(field, user[field]);
+      //setUser({...user, 'dormitory':editedUser.dormitory});
       localStorage.setItem("user", JSON.stringify(user));
+      //setEditedUser(user);
+      setAdress(editedAdress);
     } catch (error) {
       console.error("Ошибка сохранения изменений:", error);
       alert("Ошибка сохранения изменений. Пожалуйста, попробуйте снова.");
@@ -107,15 +119,15 @@ function Profile() {
         {showEditFirstName && (
           <input
             type="text"
-            value={user.first_name}
-            onChange={(e) => setUser({...user, first_name: e.target.value })}
+            value={editedUser.first_name}
+            onChange={(e) => setEditedUser({ ...editedUser, first_name: e.target.value })}
             required
           />
         )}
         {showEditFirstName && (
           <div>
             <Check onClick={() => {handleSaveChange('first_name');
-            setShowEditFirstName(false)
+            setShowEditFirstName(false);
             }} />
             <X onClick={() => setShowEditFirstName(false)} />
           </div>
@@ -128,8 +140,8 @@ function Profile() {
         {showEditLastName && (
           <input
             type="text"
-            value={user.last_name}
-            onChange={(e) => setUser({...user, last_name: e.target.value })}
+            value={editedUser.last_name}
+            onChange={(e) => setEditedUser({ ...editedUser, last_name: e.target.value })}
             required
           />
         )}
@@ -149,8 +161,8 @@ function Profile() {
         {showEditPatName && (
           <input
             type="text"
-            value={user.pat_name || ""}
-            onChange={(e) => setUser({...user, pat_name: e.target.value })}
+            value={editedUser.pat_name}
+            onChange={(e) => setEditedUser({ ...editedUser, pat_name: String(e.target.value) })}
           />
         )}
         {showEditPatName && (
@@ -168,11 +180,13 @@ function Profile() {
         <PencilSquare onClick={() => setShowEditDormitory(true)} />
         {showEditDormitory && (
           <select
-            value={user.dormitory}
-            onChange={(e) => {setUser({...user, dormitory: Number(e.target.value) });
+            value={editedUser.dormitory}
+            onChange={(e) => {
+            editedUser.dormitory = e.target.value;
             getDormitoryAdressById(Number(e.target.value)).then((adress) => {
-              setAdress(adress);
+              setEditedAdress(adress);
             });
+            console.log('Выбрал: ', e.target.value, 'В editedUser: ', editedUser.dormitory);
           }}
           >
             <option value={1}>Уинская, д. 34</option>

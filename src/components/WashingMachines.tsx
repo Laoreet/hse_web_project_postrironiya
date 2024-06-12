@@ -16,7 +16,7 @@ const Dashboard: React.FC = () => {
     if (storedUser) {
       const userData = JSON.parse(storedUser);
         setUser(userData);
-      getDormitoryAdressById(userData.dormitory).then((adress) => {
+      getDormitoryAdressById(Number(userData.dormitory)).then((adress) => {
         setAdress(adress);
       });
     } else {
