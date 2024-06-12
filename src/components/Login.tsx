@@ -2,12 +2,18 @@ import React, { useState } from 'react'
 import { useNavigate} from  'react-router-dom'
 import { db } from '../lib/firebase';
 import { ref, get } from 'firebase/database';
+import {sha1} from 'crypto-hash';
+import { hashed_format } from '../lib/hasher';
+import { ForgotPasswordForm } from './ForgotPasswordForm';
+//import * as crypto from 'crypto';
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState("");
+  const [hash, setHash] = useState("");
   const navigator = useNavigate();
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -24,7 +30,8 @@ function Login() {
       if (snapshot.exists()) {
         const userData = snapshot.val();
         console.error(formattedEmail + " Exists! Checking password!");
-        if (userData.password === password) {
+        //console.log(hashed_format(password));
+        if (userData.password === hashed_format(await sha1(password))) {
           // Успешная авторизация
           localStorage.setItem("user", JSON.stringify(userData)); // Сохраняем данные пользователя в localStorage
           navigator("/profile"); // Перенаправляем на страницу профиля
@@ -45,6 +52,7 @@ function Login() {
   };
 
   return (
+    <div>
     <form onSubmit={handleSubmit}>
       <h2>Авторизация</h2>
       {error && <div className="error">{error}</div>}
@@ -66,7 +74,12 @@ function Login() {
          />
       </label>
       <button type="submit">Login</button>
+      <button type="button" onClick={() => setShowForgotPassword(true)}>
+        Забыли пароль?
+      </button>
     </form>
+      {showForgotPassword && <ForgotPasswordForm />}
+    </div>
   )
 }
 
