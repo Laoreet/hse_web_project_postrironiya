@@ -5,6 +5,8 @@ import { getDatabase, ref, child, get, onValue, off, update} from "firebase/data
 import { IDormitory } from '../interfaces';
 import { getDormitoryAdressById } from '../lib/firebase-service';
 import { PencilSquare, Check, X } from 'react-bootstrap-icons'
+import { hashed_format } from '../lib/hasher';
+import { sha1 } from 'crypto-hash';
 
 
 function Profile() {
@@ -55,26 +57,30 @@ function Profile() {
   };
 
   const handlePasswordChange = async () => {
-    if (newPassword!== confirmNewPassword) {
+    if (newPassword !== null && newPassword!== confirmNewPassword) {
       setPasswordError("Новые пароли не совпадают.");
       return;
     }
 
     try {
-      const userRef = ref(db, `Users/${user.mail.replaceAll('.', ',')}`);
+      const formattedEmail = user.mail.replaceAll(".",",");
+      const userRef = ref(db, `Users/${formattedEmail.replace(/\./g, '_')}`);
       const snapshot = await get(userRef);
+      console.log("ПРОШЛИ ПРОВЕРКУ ")
 
       if (snapshot.exists()) {
+        console.log("ПРОШЛИ ПРОВЕРКУ! ")
         const userData = snapshot.val();
-        if (userData.password!== currentPassword) {
+        if (userData.password!==hashed_format(await sha1(currentPassword))) {
           setPasswordError("Текущий пароль неверен.");
           return;
         }
 
-        await update(userRef, { password: newPassword });
+        await update(userRef, { password: hashed_format(await sha1(newPassword)) });
         setPasswordError("Пароль успешно изменен.");
       } else {
         setPasswordError("Ошибка изменения пароля.");
+        console.log("Ошибка изменения пароля.");
       }
     } catch (error) {
       console.error("Ошибка изменения пароля:", error);
@@ -236,7 +242,7 @@ function Profile() {
             />
           </label>
           {passwordError && <div className="error">{passwordError}</div>}
-          <button className='logout-button' onClick={handlePasswordChange}>Сменить пароль</button>
+          <button type="button" className='logout-button' onClick={handlePasswordChange}>Сменить пароль</button>
         </form>
     )}
     </div>

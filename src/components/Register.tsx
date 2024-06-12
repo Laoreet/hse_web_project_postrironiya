@@ -4,6 +4,8 @@ import { db } from '../lib/firebase';
 import { ref, set, get } from 'firebase/database';
 import emailjs from '@emailjs/browser';
 import apiKey from '../lib/emailkey';
+import { hashed_format } from '../lib/hasher';
+import { sha1 } from 'crypto-hash';
 
 
 function Register() {
@@ -91,7 +93,7 @@ function Register() {
           last_name: lastName,
           pat_name: patName,
           mail: formattedEmail,
-          password: password,
+          password: hashed_format(await sha1(password)),
           dormitory: dormitory,
         };
         await set(userRef, userData);
