@@ -91,9 +91,11 @@ function Profile() {
     }
     try {
       const userRef = ref(db, `Users/${user.mail.replaceAll('.', ',')}`);
+      editedUser['dormitory'] = Number(editedUser['dormitory']);
       await update(userRef, {[field]: editedUser[field]});
       //alert("Изменения сохранены успешно!");
       user[field] = editedUser[field];
+      //user['dormitory'] = Number(user['dormitory']);
       setUser({...user, [field]: editedUser[field]});
       console.log(field, user[field]);
       //setUser({...user, 'dormitory':editedUser.dormitory});
