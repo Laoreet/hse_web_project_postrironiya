@@ -12,6 +12,7 @@ import Dormitories from './components/Dormitories';
 import Slots from './components/Slots';
 import WashingMachines from './components/WashingMachines';
 import Profile from './components/Profile';
+import SlotsSchedule from './components/SlotsSchedule';
 
 
 function App() {
@@ -22,6 +23,8 @@ function App() {
       <Route path="/register" element={<Register />}/>
       <Route path="/dormitories" element={<Dormitories />}/>
       <Route path="/slots" element={<Slots />}/>
+      
+      <Route path="/slotsschedule" element={<SlotsSchedule />}/>
       <Route path="/washmachines" element={<WashingMachines />}/>
       <Route path='/profile' element={<Profile />} />
       <Route path="*" element={<ErrorPage />}/>
