@@ -14,7 +14,6 @@ export const getDormitories = async (): Promise<IDormitory[]> => {
       adress: childData.adress,
     });
   });
-
   return dormitories;
 };
 
@@ -33,7 +32,7 @@ export const getWM = async (): Promise<IWM[]> => {
     });
   });
 
-  return  wms;
+  return wms;
 };
 
 
@@ -58,7 +57,7 @@ export const getDormitoryIdById = async (
 
   if (dormitory) {
     if (dormitory.id)
-    return dormitory.id;
+      return dormitory.id;
   }
 
   return null;
@@ -72,72 +71,76 @@ export const getWMIdByDormId = async (
   const wm = await getWM();
   const dormitory_wm: IWM[] = [];
   wm.forEach((wash_m) => {
-
-    if (wash_m.dormitory_id==id && wash_m.is_working)
-      dormitory_wm.push(wash_m)
+    if (wash_m.dormitory_id == id && wash_m.is_working)
+      dormitory_wm.push(wash_m);
+    console.log(wash_m.floor);
   })
-    return dormitory_wm;
+  return dormitory_wm;
 };
 
 
 export const getSlots = async (day: string): Promise<ISlot[]> => {
   const slotsRef = ref(db, "Slots");
   const snapshot = await get(slotsRef);
-  const curDate = new Date(day);
+  let curDate = new Date(day);
   curDate.setHours(0);
   curDate.setMinutes(0);
   curDate.setSeconds(0);
-  const slots: ISlot[] = [];
+
+  let curDate_end = new Date(curDate);
+  curDate_end.setHours(23);
+  curDate_end.setMinutes(59);
+  curDate_end.setSeconds(59);
+  console.log('slotsgeting');
+  let slots_day: ISlot[] = [];
   snapshot.forEach((childSnapshot) => {
     const childData = childSnapshot.val();
     const dateParts = childData.start.split(/[- :]/); // Разбиваем строку по символам "-", " " и ":"
-const year = parseInt(dateParts[0], 10);
-const month = parseInt(dateParts[1], 10) - 1; // Месяцы в JavaScript начинаются с 0 (январь)
-const day = parseInt(dateParts[2], 10);
-const hour = parseInt(dateParts[3], 10);
-const minute = parseInt(dateParts[4], 10);
+    const year = parseInt(dateParts[0], 10);
+    const month = parseInt(dateParts[1], 10) - 1; // Месяцы в JavaScript начинаются с 0 (январь)
+    const day = parseInt(dateParts[2], 10);
+    const hour = parseInt(dateParts[3], 10);
+    const minute = parseInt(dateParts[4], 10);
 
-const date = new Date(year, month, day, hour, minute);
+    const date = new Date(year, month, day, hour, minute);
+    
+    if (date > curDate && date < curDate_end) {
 
-//console.log(date);
-//console.log(curDate);
-    if (date>curDate)
-    {
-     /// console.log('ddd')
-      slots.push({
-      id: String(childSnapshot.key),
-      user_id: childData.user_id,
-      wm_id: childData.wm_id,
-      start: childData.start,
-    });
+      slots_day.push({
+        id: String(childSnapshot.key),
+        user_id: childData.user_id,
+        wm_id: childData.wm_id,
+        start: childData.start,
+      });
+    }
   }
-  }
-);
+  );
 
-  return slots;
+  return slots_day;
 };
 
 export const getSlotsByWMids = async (
- wms: IWM[],
- day: string,
+  wms: IWM[],
+  day: string,
 ): Promise<ISlot[] | null> => {
-  let date = new Date(day);
-
-  const slots = await getSlots(day);
-  date.setHours(23);
-  date.setMinutes(59);
-  date.setSeconds(59);
-
+  let slots_day = await getSlots(day);
+  console.log('wmsslotsbywmsid');
   const slots_for_wm: ISlot[] = [];
+  if (wms.length == 0) {
+    console.log(null);
+  }
+
   wms.forEach((wash_m) => {
-    slots.forEach((slot) => {
-      let slot_date= new Date(slot.start)
-      if (wash_m.id==slot.wm_id && slot_date<date)
-        slots_for_wm.push(slot)
+    slots_day.forEach((slot) => {
+      let slot_date = new Date(slot.start)
+      if (wash_m.id == slot.wm_id) {
+        console.log(slot_date);
+        slots_for_wm.push(slot);
+      }
     })
-    
+
   })
-    return slots_for_wm;
+  return slots_for_wm;
 };
 
 
