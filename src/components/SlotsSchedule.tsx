@@ -163,7 +163,7 @@ const SlotSchedule: React.FC = () => {
 
     if (date_selected !== null) {
       curDate = new Date(date_selected.toString());
-    }
+    } 
     let now = new Date();
     if (curDate.getDate() === now.getDate()) {
       curDate.setHours(now.getHours());

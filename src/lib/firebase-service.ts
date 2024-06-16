@@ -31,7 +31,6 @@ export const getWM = async (): Promise<IWM[]> => {
       is_working: childData.is_working,
     });
   });
-
   return wms;
 };
 
