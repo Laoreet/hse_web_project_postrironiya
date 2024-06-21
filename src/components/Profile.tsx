@@ -48,7 +48,7 @@ function Profile() {
 
   const handleLogout = () => {
     localStorage.removeItem("user"); // Удаляем данные о пользователе из localStorage
-    navigator("/login"); // Перенаправляем на страницу авторизации
+    navigator("/"); // Перенаправляем на страницу авторизации
     window.location.reload();
   };
   
