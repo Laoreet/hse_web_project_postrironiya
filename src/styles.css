@@ -296,4 +296,26 @@ form {
   .WMList span.status.not-working {
     color: #e74c3c;
   }
+
+table {
+  border-collapse: collapse;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.even {
+  background-color: #f0f0f0;
+}
+
+.odd {
+  background-color: #fff;
+}
+.caption-large {
+  font-size: 24px; /* or any other size you prefer */
+  font-weight: bold; /* optional */
+}
   
