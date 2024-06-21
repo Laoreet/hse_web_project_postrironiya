@@ -23,6 +23,8 @@ const Dashboard: React.FC = () => {
   const [users, setUsers] = useState<IUser[]>([]);
   const [wms, setWms] = useState<IWM[]>([]);
   const [userNameMap, setUserNameMap] = useState<Record<string, string>>({});
+  const [dormitoryMap, setDormitoryMap] = useState<Record<string, string>>({});
+  const [floorMap, setFloorMap] = useState<Record<string, string>>({});
 
   const dbRef = ref(db);
 
@@ -44,6 +46,46 @@ const Dashboard: React.FC = () => {
 
     return () => {
       off(usersRef);
+    };
+  }, []);
+
+  useEffect(() => {
+  const wmsRef = ref(db, 'WM');
+  onValue(wmsRef, (snapshot) => {
+    const wmsData = snapshot.val();
+    const wmsList: IWM[] = [];
+    const floorMap: { [id: string]: string } = {};
+    for (let id in wmsData) {
+      if (wmsData.hasOwnProperty(id)) {
+        wmsList.push({ id,...wmsData[id] });
+        floorMap[id] = wmsData[id].floor;
+      }
+    }
+    setWms(wmsList);
+    setFloorMap(floorMap);
+  });
+    return () => {
+      off(wmsRef);
+    };
+  }, []);
+
+  useEffect(() => {
+    const dormitoriesRef = ref(db, 'Dormitories');
+    onValue(dormitoriesRef, (snapshot) => {
+      const data = snapshot.val();
+      const dormitoriesList: IDormitory[] = [];
+      const dormitoryMap: { [id: string]: string } = {};
+      for (let id in data) {
+        if (data.hasOwnProperty(id)) {
+          dormitoriesList.push({ id: Number(id), ...data[id] });
+          dormitoryMap[id] = data[id].adress;
+        }
+      }
+      setDormitories(dormitoriesList);
+      setDormitoryMap(dormitoryMap);
+    });
+    return () => {
+      off(dormitoriesRef);
     };
   }, []);
 
@@ -81,7 +123,9 @@ const Dashboard: React.FC = () => {
               <th>Имя</th>
               <th>Фамилия</th>
               <th>Email</th>
-              <th>Стиралка номер</th>
+              <th>Адрес</th>
+              <th>Этаж</th>
+              <th>Состояние</th>
             </tr>
             </thead>
             <tbody>
@@ -91,7 +135,9 @@ const Dashboard: React.FC = () => {
                   <td>{userNameMap[slot.user_id]}</td>
                   <td>{users.find((user) => user.id === slot.user_id)?.last_name}</td>
                   <td>{slot.user_id}</td>
-                  <td>Стиралка номер {slot.wm_id}</td>
+                  <td>{dormitoryMap[slot.wm_id]}</td>
+                  <td>{floorMap[slot.wm_id]}</td>
+                  <td>{new Date(slot.start) < new Date()? '-' : '✓'}</td>
                 </tr>
             ))}
             </tbody>
