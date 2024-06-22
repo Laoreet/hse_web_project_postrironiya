@@ -98,7 +98,7 @@ const SlotSchedule: React.FC = () => {
   useEffect(() => {
     console.log('use effect slots update')
     if (slots) {
-      if (selectedOption != null) { 
+      if (selectedOption != null) {
         console.log(selectedOption);
         slots_matrix(selectedOption); }
       else {
@@ -106,18 +106,18 @@ const SlotSchedule: React.FC = () => {
       }
     }
     else {
-       if (selectedOption == null) {
-       let now = set_null_time(new Date());
-      slots_update(now.toDateString());
-       }
+      if (selectedOption == null) {
+        let now = set_null_time(new Date());
+        slots_update(now.toDateString());
+      }
       else
-      slots_update(selectedOption);
+        slots_update(selectedOption);
     }
   }, [slots]);
 
 
   // получение юзера, стиральных машин
-  useEffect(() => { 
+  useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
       const userData = JSON.parse(storedUser);
@@ -163,8 +163,8 @@ const SlotSchedule: React.FC = () => {
 
     if (date_selected !== null) {
       curDate = new Date(date_selected.toString());
-    } 
-    
+    }
+
     let now = new Date();
     if (curDate.getDate() === now.getDate()) {
       curDate.setHours(now.getHours());
@@ -235,22 +235,22 @@ const SlotSchedule: React.FC = () => {
         curDate = set_null_time(curDate);
         let dirty_Slots: ISlot[] = [];
         slotsList.forEach(slot => {
-          let date = get_slot_in_date_format(slot.start)
-          let curdate_end = new Date()
-          if (selectedOption != null) curdate_end = new Date(selectedOption);
-          curdate_end.setHours(23);
-          curdate_end.setMinutes(59);
-          curdate_end.setSeconds(59);
-          if (date > curDate && date < curdate_end) {
-            console.log('adding slot to dirty_slots')
-            dirty_Slots.push({
-              id: String(slot.id),
-              user_id: slot.user_id,
-              wm_id: slot.wm_id,
-              start: slot.start,
-            });
-          }
-        }
+              let date = get_slot_in_date_format(slot.start)
+              let curdate_end = new Date()
+              if (selectedOption != null) curdate_end = new Date(selectedOption);
+              curdate_end.setHours(23);
+              curdate_end.setMinutes(59);
+              curdate_end.setSeconds(59);
+              if (date > curDate && date < curdate_end) {
+                console.log('adding slot to dirty_slots')
+                dirty_Slots.push({
+                  id: String(slot.id),
+                  user_id: slot.user_id,
+                  wm_id: slot.wm_id,
+                  start: slot.start,
+                });
+              }
+            }
         );
         let slots_for_wm: ISlot[] = [];
         wms.forEach((wash_m) => {
@@ -314,52 +314,59 @@ const SlotSchedule: React.FC = () => {
       }
     }
   }
-  const busySlot = async () => {
-    toast('Занято!');
+  const busySlot = async (slot: ISlot) => {
+    toast(`Занято! пользователем ${slot.user_id}`);
   }
 
   return (
-    <div className='container'>
-      <h1>Слоты</h1>
-      <h2>Выберите дату</h2>
-      <div>
-        <label htmlFor="dropdown_label">Choose an option:</label>
-        <select id="dropdown" value={selectedOption} onChange={handleSelectChange}>
-          {week?.map((d) => (
-            <option value={d}>{d}</option>
-          ))}
-        </select>
-        <p>You selected: {selectedOption}</p>
-      </div>
-      <ToastContainer />
-      {busyslot !== null ? <div><p>У вас имеется запись на {busyslot?.start} на {busyslot_wm_floor} этаже</p>
-        <button onClick={() => resetSlot()}>Отменить</button>
-      </div> :
-        <div> <p>Вы не записаны на сегодня</p>
-          <p>Выберите слот</p></div>}
-      <div>
-        <h2>Список слотов</h2>
-        <br></br>
-        <table>
-          <tbody>
+      <div className='container'>
+        <h1>Слоты</h1>
+        <h2>Выберите дату</h2>
+        <div>
+          <label htmlFor="dropdown_label">Choose an option:</label>
+          <select id="dropdown" value={selectedOption} onChange={handleSelectChange}>
+            {week?.map((d) => (
+                <option value={d}>{d}</option>
+            ))}
+          </select>
+          <p>You selected: {selectedOption}</p>
+        </div>
+        <ToastContainer />
+        {busyslot !== null ? <div><p>У вас имеется запись на {busyslot?.start} на {busyslot_wm_floor} этаже</p>
+              <button onClick={() => resetSlot()}>Отменить</button>
+            </div> :
+            <div> <p>Вы не записаны на сегодня</p>
+              <p>Выберите слот</p></div>}
+        <div>
+          <h2>Список слотов</h2>
+          <br></br>
+          <table>
+            <tbody>
             {
               slotMatrix.map((el) => (
-                <tr>
-                  <td>{el[0]} этаж</td>
-                  {time_arr.map((_, i) => (
-                    el[1][i] == "grey" ?
-                      <td key={i}><button style={{ background: 'grey' }} onClick={() => busySlot()}>{time_arr[i]}</button></td>
-                      :
-                      <td key={i}><button style={{ background: 'blue' }} onClick={() => chooseSlot(el[0], time_arr[i])}>{time_arr[i]}</button></td>
-                  )
-                  )
-                  }
-                </tr>
+                  <tr>
+                    <td>{el[0]} этаж</td>
+                    {time_arr.map((_, i) => (
+                            el[1][i] == "grey" ?
+                                <td key={i}><button style={{ background: 'grey' }} onClick={() => {
+                                  (function(index) {
+                                    const slot = slots?.find((slot) => slot.start.substring(slot.start.length - 5) === time_arr[index] && slot.wm_id === wms?.find((wm) => wm.floor === el[0])?.id);
+                                    if (slot) {
+                                      busySlot(slot);
+                                    }
+                                  })(i);
+                                }}>{time_arr[i]}</button></td>
+                                :
+                                <td key={i}><button style={{ background: 'blue' }} onClick={() => chooseSlot(el[0], time_arr[i])}>{time_arr[i]}</button></td>
+                        )
+                    )
+                    }
+                  </tr>
               ))
             }</tbody>
-        </table>
+          </table>
+        </div>
       </div>
-    </div>
   );
 };
 
