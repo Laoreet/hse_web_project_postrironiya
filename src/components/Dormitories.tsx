@@ -54,8 +54,16 @@ const Dashboard: React.FC = () => {
     };
   }, []);
 
+  const [showStudents, setShowStudents] = useState(false);
+
   const handleDormitoryClick = (dormitory: IDormitory) => {
+    if (selectedDormitory && selectedDormitory.id === dormitory.id) {
+      setShowStudents(false);
+    }
     setSelectedDormitory(dormitory);
+    if (!showStudents) {
+      setShowStudents(true);
+    }
   };
 
   return (
@@ -70,7 +78,7 @@ const Dashboard: React.FC = () => {
                 </li>
             ))}
           </ul>
-          {selectedDormitory && (
+          {showStudents && selectedDormitory && (
               <div>
                 <h2>Список студентов в общежитии {selectedDormitory.adress}</h2>
                 <ul>
