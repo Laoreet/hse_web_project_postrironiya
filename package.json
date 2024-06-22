@@ -12,9 +12,11 @@
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "bootstrap-icons": "^1.11.3",
+    "crypto-hash": "^3.0.0",
     "firebase": "^10.12.2",
     "firebase-tools": "^13.10.2",
     "react": "^18.3.1",
+    "react-bootstrap-icons": "^1.11.4",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.23.1",
     "react-scripts": "5.0.1",
@@ -40,6 +42,7 @@
     ]
   },
   "devDependencies": {
-    "@types/firebase": "^3.2.1"
+    "@types/firebase": "^3.2.1",
+    "@types/react-toastify": "^4.1.0"
   }
 }

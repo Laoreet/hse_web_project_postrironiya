@@ -9,13 +9,13 @@ import 'firebase/database';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyD7dGvswtbgtyA9O4ZBwqC0LCSKmDZN7nI",
-  authDomain: "wmdatabase-4cb7e.firebaseapp.com",
-  databaseURL: "https://wmdatabase-4cb7e-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "wmdatabase-4cb7e",
-  storageBucket: "wmdatabase-4cb7e.appspot.com",
-  messagingSenderId: "308701870310",
-  appId: "1:308701870310:web:eeccdef48600cca7ace327"
+  apiKey: "AIzaSyDs7a21lCUKdLZlpGxjGQBzDD2D6eSAGEs",
+  authDomain: "postironiya-hse.firebaseapp.com",
+  databaseURL: "https://postironiya-hse-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "postironiya-hse",
+  storageBucket: "postironiya-hse.appspot.com",
+  messagingSenderId: "954760764710",
+  appId: "1:954760764710:web:078d54387dec4aeb1135e7"
 };
 
 // Initialize Firebase

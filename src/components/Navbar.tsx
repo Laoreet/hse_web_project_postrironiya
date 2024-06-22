@@ -23,6 +23,8 @@ function Navbar() {
             <Link to="/dashboard">Дашборд</Link>
             <Link to="/slots">Слоты</Link>
             <Link to="/dormitories">Общежития</Link>
+            
+            <Link to="/slotsschedule">Расписание</Link>
             <Link to="/washmachines">Стиралки</Link>
             <Link to="/profile">Профиль</Link>
           </>

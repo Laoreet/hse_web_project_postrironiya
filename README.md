@@ -1,46 +1,35 @@
-# Getting Started with Create React App
+# Веб-приложение "Постирония" для студентов НИУ ВШЭ-Пермь, проживающих в общежитиях.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Приложение предназначено для облегчения процесса записи на стирку вещей в стиральных машинах общежитий.
 
-## Available Scripts
+В настоящий момент студентам приходится договариваться между собой о записи на стирку в чатах в мессенджерах и постоянно бегать на вахту для того, чтобы узнать, занята та или иная стиральная машина, или нет.
+Наше приложение позволяет оптимизировать этот процесс.
+Теперь студенты могут заранее бронировать себе определенные временные слоты на стирку, оперативно получать информацию о статусе стиральных машин (занята/свободна и работает/не работает).
+Такие возможности сильно облегчат жизнь студентов, проживающих в общежитиях.
 
-In the project directory, you can run:
+# Запуск приложения
 
-### `npm start`
+После клонирования репозитория необходимо загрузить все нужные модули, написав следующую команду в директории проекта:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### 'pnpm i'
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Далее приложение можно запустить, написав следующую команду:
 
-### `npm test`
+### 'pnpm start'
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Проект будет запущен по следующему адресу: 
 
-### `npm run build`
+### 'http://localhost:3000'
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## О проекте
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Проект разработан в рамках курса "Web-программирование" студентами 3-го курса НИУ ВШЭ-Пермь.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+При разработке использовались технологии: React, Typescript, Firebase Realtime Database.
 
-### `npm run eject`
+*Над проектом работали: <br>
+Кирьянов Сергей <br>
+Голованова Мария <br>
+Мустафина Назгуль <br>
+Микишева Полина*
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
