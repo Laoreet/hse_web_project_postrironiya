@@ -19,7 +19,7 @@ export interface IDormitory {
     pat_name?: string;
     password?: string;
     room?: number;
-    social_net?: string;
+    social?: string;
   }
   
   export interface IWM {

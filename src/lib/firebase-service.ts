@@ -35,7 +35,7 @@ export const getUser = async(id: string): Promise<IUser|null> =>{
     pat_name: childData.pat_name,
     mail: childData.mail,
     room: childData.room,
-    social_net: childData.social_net
+    social: childData.social
     }
   }});
 

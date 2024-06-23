@@ -330,7 +330,7 @@ const SlotSchedule: React.FC = () => {
       slots?.forEach((slot) =>{
       if (slot.start.endsWith(time) && slot.wm_id==wmid){
         getUser(user.mail).then((u) =>{
-          toast('Занял пользователь' + '\n' +u?.first_name+' '+ u?.last_name + ', ' +  u?.mail.replace(/,/g, '.') + ', ' + u?.social_net + ', ' + 'комната '+ u?.room);
+          toast('Занял пользователь' + '\n' +u?.first_name+' '+ u?.last_name + ', ' +  u?.mail.replace(/,/g, '.') + ', ' + u?.social + ', ' + 'комната '+ u?.room);
         }); 
       }
     })
