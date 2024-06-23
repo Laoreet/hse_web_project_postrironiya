@@ -18,6 +18,8 @@ export interface IDormitory {
     last_name?: string;
     pat_name?: string;
     password?: string;
+    room?: number;
+    social?: string;
   }
   
   export interface IWM {

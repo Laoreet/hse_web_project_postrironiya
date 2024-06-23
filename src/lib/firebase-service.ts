@@ -1,6 +1,6 @@
 import { ref, get } from "firebase/database";
 import { db } from "./firebase";
-import {  IDormitory, ISlot, IWM } from "../interfaces";
+import {  IDormitory, ISlot, IUser, IWM } from "../interfaces";
 
 export const getDormitories = async (): Promise<IDormitory[]> => {
   const dormRef = ref(db, "Dormitories");
@@ -19,6 +19,30 @@ export const getDormitories = async (): Promise<IDormitory[]> => {
 };
 
 
+export const getUser = async(id: string): Promise<IUser|null> =>{
+  const dormRef = ref(db, "Users");
+  const snapshot = await get(dormRef);
+
+  let user: IUser|null = null;
+  snapshot.forEach((childSnapshot) => {
+    const childData = childSnapshot.val();
+    if (id==childSnapshot.key) 
+    {user={
+      id: childSnapshot.key,
+    first_name: childData.first_name,
+    dormitory: childData.dormitory,
+    last_name: childData.last_name,
+    pat_name: childData.pat_name,
+    mail: childData.mail,
+    room: childData.room,
+    social: childData.social
+    }
+  }});
+
+  return user;
+}
+
+
 export const getWM = async (): Promise<IWM[]> => {
   const dormRef = ref(db, "WM");
   const snapshot = await get(dormRef);
@@ -26,6 +50,7 @@ export const getWM = async (): Promise<IWM[]> => {
   const wms: IWM[] = [];
   snapshot.forEach((childSnapshot) => {
     const childData = childSnapshot.val();
+if (childData.is_working==1)    
     wms.push({
       id: Number(childSnapshot.key),
       dormitory_id: childData.dormitory_id,

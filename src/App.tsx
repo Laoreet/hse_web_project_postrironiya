@@ -1,9 +1,11 @@
+
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import './styles.css'
 import {Route, Routes, createBrowserRouter} from "react-router-dom"
 import DataList from './components/DataList';
+import HomePage from './components/HomePage';
 import Dashboard from './components/Dashboard';
 import ErrorPage from './components/Error-page';
 import Login from './components/Login';
@@ -18,6 +20,7 @@ import SlotsSchedule from './components/SlotsSchedule';
 function App() {
   return (
     <Routes>
+       <Route path="/" element={<HomePage />} />
       <Route path="/dashboard" element={<Dashboard />}/>
       <Route path="/login" element={<Login />}/>
       <Route path="/register" element={<Register />}/>

@@ -27,6 +27,8 @@ function Profile() {
   const [showEditLastName, setShowEditLastName] = useState(false);
   const [showEditPatName, setShowEditPatName] = useState(false);
   const [showEditDormitory, setShowEditDormitory] = useState(false);
+  const [showEditRoom, setShowEditRoom] = useState(false);
+  const [showEditSocial, setShowEditSocial] = useState(false);
 
 
   useEffect(() => {
@@ -48,7 +50,7 @@ function Profile() {
 
   const handleLogout = () => {
     localStorage.removeItem("user"); // Удаляем данные о пользователе из localStorage
-    navigator("/login"); // Перенаправляем на страницу авторизации
+    navigator("/"); // Перенаправляем на страницу авторизации
     window.location.reload();
   };
   
@@ -89,9 +91,9 @@ function Profile() {
   };
 
   const handleSaveChange = async (field: keyof typeof user) => {
-    if (field === 'first_name' || field === 'last_name') {
-      if (!editedUser[field].trim()) {
-        alert('Имя и Фамилия не могут быть пустыми');
+    if (field === 'first_name' || field === 'last_name' || field === 'social') {
+      if (!String(editedUser[field]).trim()) {
+        alert('Имя, Фамилия и Социальные сети не могут быть пустыми');
         return;
       }
     }
@@ -103,7 +105,7 @@ function Profile() {
       user[field] = editedUser[field];
       //user['dormitory'] = Number(user['dormitory']);
       setUser({...user, [field]: editedUser[field]});
-      console.log(field, user[field]);
+      console.log("Изменение:", field, user[field]);
       //setUser({...user, 'dormitory':editedUser.dormitory});
       localStorage.setItem("user", JSON.stringify(user));
       //setEditedUser(user);
@@ -211,6 +213,54 @@ function Profile() {
           </div>
         )}
       </p>
+      
+      <p className="profile-info">
+        Номер комнаты: {String(user.room) || "Не указано"}
+        <PencilSquare onClick={() => setShowEditRoom(true)} />
+        {showEditRoom && (
+          <input
+            type="text"
+            pattern="[0-9]*"
+            value={editedUser.room}
+            onChange={(e) => {
+              const value = e.target.value.replace(/[^0-9]/g, '');
+              setEditedUser({ ...editedUser, room: Number(value) });
+            }}
+            required
+          />
+        )}
+        {showEditRoom && (
+          <div>
+            <Check onClick={() => {handleSaveChange('room');
+              setShowEditRoom(false);
+            }} />
+            <X onClick={() => setShowEditRoom(false)} />
+          </div>
+        )}
+      </p>
+
+      <p className="profile-info">
+        Социальные сети: {user.social || "Не указано"}
+        <PencilSquare onClick={() => setShowEditSocial(true)} />
+        {showEditSocial && (
+          <input
+            type="text"
+            value={editedUser.social}
+            onChange={(e) => setEditedUser({ ...editedUser, social: e.target.value })}
+            required
+          />
+        )}
+        {showEditSocial && (
+          <div>
+            <Check onClick={() => {handleSaveChange('social');
+              setShowEditSocial(false);
+            }} />
+            <X onClick={() => setShowEditSocial(false)} />
+          </div>
+        )}
+      </p>
+
+
       <button className="logout-button" onClick={handleLogout}>Выход</button>
 
       <button className='change-pass-button' onClick={handleShowPasswordChangeForm}>Сменить пароль</button>

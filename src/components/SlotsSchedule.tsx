@@ -3,7 +3,7 @@ import { IDormitory, ISlot, IUser, IWM } from '../interfaces';
 import { db } from '../lib/firebase';
 import { getDatabase, ref, child, get, onValue, off, set, remove, update } from "firebase/database";
 import { useNavigate } from 'react-router-dom';
-import { getSlotsByWMids, getWMIdByDormId } from '../lib/firebase-service';
+import { getSlotsByWMids, getUser, getWMIdByDormId } from '../lib/firebase-service';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import 'firebase/database';
@@ -20,6 +20,8 @@ const SlotSchedule: React.FC = () => {
   const [busyslot_wm_floor, setBusySlotWM] = useState<number | null>(0);
   const [slotMatrix, setMatrix] = useState<[number, string[]][]>([]);
   const [week, setWeek] = useState<string[]>([]);
+
+  
 
 
   //пполучить слот в Date формате
@@ -54,6 +56,7 @@ const SlotSchedule: React.FC = () => {
   //функция для получения дней ближайшей недели и помещения в week
   useEffect(() => { // 1
     console.log('week_Set');
+
     let today = set_null_time(new Date());
     let day: number;
     let month: number;
@@ -314,58 +317,93 @@ const SlotSchedule: React.FC = () => {
       }
     }
   }
-  const busySlot = async (slot: ISlot) => {
-    toast(`Занято! пользователем ${slot.user_id}`);
+
+
+  const busySlot = async (time: string|null = null, floor: number|null = null) => {
+    if (time!=null && floor!=null)
+   {
+    let inslots: Boolean = false;
+    if (slots!=null)
+    {
+      if (slots.length>0)
+      {let wmid: number;
+      wmid = 0;
+      wms.forEach((wm) => {
+        if (wm.floor == floor)
+          wmid = wm.id;
+      })
+      slots?.forEach((slot) =>{
+      if (slot.start.endsWith(time) && slot.wm_id==wmid ){
+        console.log(slot.start);
+        console.log(time);
+        getUser(slot.user_id).then((u) =>{
+          toast('Занял пользователь' + '\n' +u?.first_name+' '+ u?.last_name + ', ' +  u?.mail.replace(/,/g, '.') + ', ' + u?.social + ', ' + 'комната '+ u?.room);
+        inslots=true;
+        }); 
+      }
+    })
+    if (!inslots) 
+      toast('Нельзя записаться на этот слот!');
+    }
+    }
   }
+  else 
+  toast('Нельзя записаться на этот слот!');
+
+  }
+   
 
   return (
-      <div className='container'>
-        <h1>Слоты</h1>
-        <h2>Выберите дату</h2>
-        <div>
-          <label htmlFor="dropdown_label">Choose an option:</label>
-          <select id="dropdown" value={selectedOption} onChange={handleSelectChange}>
-            {week?.map((d) => (
-                <option value={d}>{d}</option>
-            ))}
-          </select>
-          <p>You selected: {selectedOption}</p>
+
+    <div className='container'>  
+      <div className='headerschedule' style={{ display: 'flex', justifyContent: 'space-between'}}>
+          
+        <h2 className = "headerSlots" style={{ marginLeft:'11%'}}>Выберите дату
+        <div className="slot-container" style={{ marginLeft:'20px', marginBottom:'10px', display: 'inline-block', verticalAlign: 'middle' , width: '174', height: '110'}}> 
+              <select id="dropdown" value={selectedOption} onChange={handleSelectChange}>
+                {week?.map((d) => (
+                  <option value={d}>{d}</option>
+                ))}
+              </select>          
         </div>
+        </h2>
         <ToastContainer />
-        {busyslot !== null ? <div><p>У вас имеется запись на {busyslot?.start} на {busyslot_wm_floor} этаже</p>
-              <button onClick={() => resetSlot()}>Отменить</button>
-            </div> :
-            <div> <p>Вы не записаны на сегодня</p>
-              <p>Выберите слот</p></div>}
-        <div>
-          <h2>Список слотов</h2>
-          <br></br>
+        {busyslot !== null ? 
+          <div className="slot-info">
+            <p>Запись на:&#9829;<span className="important-text">{new Date(busyslot?.start).toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' })}</span>&#9829;&nbsp;&mdash;&nbsp; Этаж: &#9829;<span className="important-text">{busyslot_wm_floor}</span>&#9829;</p>
+            <p><button className="cancel-button" onClick={() => resetSlot()}>Отменить</button></p>
+          </div> :
+          <div className="slot-info"> 
+            <p><span className="important-text">Вы не записаны на этот день</span></p>
+              <p>Выберите слот</p>
+          </div>}          
+        </div>
+      
+
+      <div className="slot-container">
+        <h2>Слоты</h2>    
           <table>
             <tbody>
             {
               slotMatrix.map((el) => (
-                  <tr>
-                    <td>{el[0]} этаж</td>
-                    {time_arr.map((_, i) => (
-                            el[1][i] == "grey" ?
-                                <td key={i}><button style={{ background: 'grey' }} onClick={() => {
-                                  (function(index) {
-                                    const slot = slots?.find((slot) => slot.start.substring(slot.start.length - 5) === time_arr[index] && slot.wm_id === wms?.find((wm) => wm.floor === el[0])?.id);
-                                    if (slot) {
-                                      busySlot(slot);
-                                    }
-                                  })(i);
-                                }}>{time_arr[i]}</button></td>
-                                :
-                                <td key={i}><button style={{ background: 'blue' }} onClick={() => chooseSlot(el[0], time_arr[i])}>{time_arr[i]}</button></td>
-                        )
-                    )
-                    }
-                  </tr>
-              ))
-            }</tbody>
-          </table>
-        </div>
+                      <tr>
+                      <td>{el[0]} этаж</td>
+                      {time_arr.map((_, i) => (
+                      (busyslot!== null && busyslot?.start.endsWith(time_arr[i]) && el[0]==busyslot_wm_floor) ?
+                      <td key={i}><button style={{ background: '#20c997', border: 'none', borderRadius: '5px'}} onClick={() => busySlot(time_arr[i], el[0])}>{time_arr[i]}</button></td>
+                      :
+                      (el[1][i] === "grey" ?
+                      <td key={i}><button style={{ background: '#6c7788' , border: 'none', borderRadius: '5px'}} onClick={() => busySlot(time_arr[i], el[0])}>{time_arr[i]}</button></td>
+                      :
+                      <td key={i}><button style={{ background: '#aac4eb', border: 'none', borderRadius: '5px' }} onClick={() => chooseSlot(el[0], time_arr[i])}>{time_arr[i]}</button></td>
+                      )
+                      ))
+              }
+                    </tr>
+                  ))
+              }</tbody>
+          </table>        
+        </div>    
       </div>
   );
 };
