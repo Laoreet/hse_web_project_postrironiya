@@ -666,62 +666,33 @@ body {
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   font-size: 20px;
-  display: grid; /* use grid */
-   /* center the container horizontally */
-  max-width: 1000px; /* adjust the width to your liking */  
-  margin-left: 10%;
+  display: grid; 
+  max-width: 1000px; 
+  margin-left: 10%;  
 }
 
-.slot-info {
-  margin-top: 10px;
+.slot-info {  
   align-items: center;  
-  justify-content: space-between;
-  width: 357px;
-  height: 191px;
-  margin-top: 10px;
+  justify-content: space-between;  
   background-color: #fff; /* white background */
   padding: 0px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   font-size: 20px;
-  display: grid; /* use grid */
-   /* center the container horizontally */
-  
-  margin-left: 10%;
+  text-align: center;  
+  width: 400px;
+  height: 120px;  
 }
 
 .slot-info p{
   padding:0px;
 }
 
-
-.slot-empty {
-  margin-top: 10px;  
-  text-align: center;
-  width: 357px;
-  height: 150px;
-  margin-top: 10px;
-  background-color: #fff; /* white background */
-  padding: 10px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  font-size: 20px;
-  display: grid; /* use grid */
-   /* center the container horizontally */
-  
-  margin-left: 10%;
-}
-
-.slot-empty p
-{
-  margin:0px;
-  padding:0px;
-}
-
 .cancel-button {
   background-color: #252541; /* red */
   border: none;
-  
+  width: 100px;
+  height: 30px;
   font-size: 16px;
   cursor: pointer;
   border-radius: 5px;  
@@ -730,9 +701,7 @@ body {
 
 .important-text{
   color:#1d2125;
-  max-width: 1200px;
   font-size: 20px;
-
 }
 
 .schedule
@@ -821,8 +790,8 @@ body {
 
 .headerschedule
 {
-  margin-left: 5%;
-  margin-right: 15%;
+  margin-left: 10%;
+  margin-right: 5%;
 }
 
 table {
@@ -865,4 +834,24 @@ tr td button.free {
 
 tr td button:hover {
   background-color: #f5f5f5;
+}
+
+.headerschedule {
+  display: flex;
+  justify-content: space-between;
+  max-height: 200px; /* Примерное значение высоты, которое вы хотите установить */
+  overflow: auto; /* Добавим прокрутку, если содержимое не помещается */
+}
+
+.headerschedule {
+  margin-left: 0%;
+  margin-right: 5%;
+}
+
+@media only screen and (max-width: 600px) {
+  .headerschedule {
+      flex-wrap: wrap; /* Элементы будут переноситься на новую строку */
+      max-height: none; /* Снимаем ограничение высоты */
+      overflow: visible; /* Убираем прокрутку */
+  }
 }

@@ -323,46 +323,47 @@ const SlotSchedule: React.FC = () => {
     <div className='container'>  
       <div className='headerschedule' style={{ display: 'flex', justifyContent: 'space-between'}}>
           
-        <h2 className = "headerSlots">Выберите дату</h2>
-        <div className="slot-container" style={{ display: 'inline-block', verticalAlign: 'middle' }}> 
+        <h2 className = "headerSlots" style={{ marginLeft:'11%'}}>Выберите дату
+        <div className="slot-container" style={{ marginLeft:'20px', marginBottom:'10px', display: 'inline-block', verticalAlign: 'middle' , width: '174', height: '110'}}> 
               <select id="dropdown" value={selectedOption} onChange={handleSelectChange}>
                 {week?.map((d) => (
                   <option value={d}>{d}</option>
                 ))}
               </select>          
         </div>
+        </h2>
         <ToastContainer />
         {busyslot !== null ? 
           <div className="slot-info">
-            <p>У вас запись на <span className="important-text">{busyslot?.start}</span> на <span className="important-text">{busyslot_wm_floor} этаже</span></p>
+            <p>Запись на:&#9829;<span className="important-text">{new Date(busyslot?.start).toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' })}</span>&#9829;&nbsp;&mdash;&nbsp; Этаж: &#9829;<span className="important-text">{busyslot_wm_floor}</span>&#9829;</p>
             <p><button className="cancel-button" onClick={() => resetSlot()}>Отменить</button></p>
           </div> :
-          <div className="slot-empty"> 
-            <p>Вы не записаны на сегодня              
-              Выберите слот
-            </p>
+          <div className="slot-info"> 
+            <p><span className="important-text">Вы не записаны на этот день</span></p>
+              <p>Выберите слот</p>
           </div>}          
         </div>
       
 
       <div className="slot-container">
         <h2>Слоты</h2>    
-        <br></br>
-
           <table>
             <tbody>
-              {
-                  slotMatrix.map((el) => (
-                    <tr>
+            {
+              slotMatrix.map((el) => (
+                      <tr>
                       <td>{el[0]} этаж</td>
                       {time_arr.map((_, i) => (
-                        el[1][i] == "grey" ?
-                          <td key={i}><button style={{ background: 'grey' }} onClick={() => busySlot()}>{time_arr[i]}</button></td>
-                          :
-                          <td key={i}><button style={{ background: 'blue' }} onClick={() => chooseSlot(el[0], time_arr[i])}>{time_arr[i]}</button></td>
+                      (busyslot!== null && busyslot?.start.endsWith(time_arr[i]) && el[0]==busyslot_wm_floor) ?
+                      <td key={i}><button style={{ background: '#20c997', border: 'none', borderRadius: '5px'}} onClick={() => busySlot()}>{time_arr[i]}</button></td>
+                      :
+                      (el[1][i] === "grey" ?
+                      <td key={i}><button style={{ background: '#6c7788' , border: 'none', borderRadius: '5px'}} onClick={() => busySlot()}>{time_arr[i]}</button></td>
+                      :
+                      <td key={i}><button style={{ background: '#aac4eb', border: 'none', borderRadius: '5px' }} onClick={() => chooseSlot(el[0], time_arr[i])}>{time_arr[i]}</button></td>
                       )
-                      )
-                      }
+                      ))
+              }
                     </tr>
                   ))
               }</tbody>
