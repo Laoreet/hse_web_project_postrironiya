@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { Link , useNavigate} from 'react-router-dom'
-
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
+import emailjs from '@emailjs/browser';
 
 interface HomePageProps {}
 
@@ -10,6 +12,29 @@ const HomePage: React.FC<HomePageProps> = () => {
     second: false,
     third: false,
   });
+
+  const [name, setName] = useState('');
+  const [social, setSocial] = useState('');
+  const [message, setMessage] = useState('');
+
+  const handleSubmit = (values: any, { setSubmitting }: any) => {
+    const templateParams = {
+      message: `
+        Имя: ${values.name},
+        Соцсеть: ${values.social},
+        Сообщение: ${values.message}
+      `,
+    };
+    emailjs.send('service_fnurji9', 'template_yt3ajbj', templateParams, 'vYLTX5qiQtr0thvsJ')
+      .then((response) => {
+        console.log('Email sent successfully!', response);
+      })
+      .catch((error) => {
+        console.error('Error sending email:', error);
+      });
+    setSubmitting(false);
+  };
+
 
   const toggleTooltip = (index: keyof typeof showTooltip) => {
     setShowTooltip((prevShowTooltip) => ({
@@ -31,6 +56,11 @@ const HomePage: React.FC<HomePageProps> = () => {
     }
   }, []);
 
+  const feedbackSchema = Yup.object().shape({
+    name: Yup.string().required('Имя является обязательным'),
+    social: Yup.string(),
+    message: Yup.string().required('Сообщение является обязательным'),
+  });
 
   return (
     <div className="home-page">
@@ -155,6 +185,39 @@ const HomePage: React.FC<HomePageProps> = () => {
               </div>
             </div>
           </div>
+        </section>
+
+        <section className="feedback">
+          <h2>Обратная связь</h2>
+          <Formik
+          initialValues={{ name: '', social: '', message: '' }}
+          validationSchema={feedbackSchema}
+          onSubmit={handleSubmit}
+        >
+          {({ errors, touched }) => (
+            <Form>
+              <label>Имя:</label>
+              <Field className="field" type="text" name="name" />
+              {errors.name && touched.name ? (
+                <ErrorMessage name="name" component="div" />
+              ) : null}
+              <br />
+              <label>Соцсеть: <span className='unimportant'>*если хотите получить ответ</span></label>
+              <Field className="field" type="text" name="social" />
+              {errors.social && touched.social ? (
+                <ErrorMessage name="social" component="div" />
+              ) : null}
+              <br />
+              <label>Сообщение:</label>
+              <Field className="msg" component="textarea" name="message" />
+              {errors.message && touched.message ? (
+                <ErrorMessage name="message" component="div" />
+              ) : null}
+              <br />
+              <button type="submit">Отправить</button>
+            </Form>
+          )}
+        </Formik>
         </section>
       </main>
     </div>
