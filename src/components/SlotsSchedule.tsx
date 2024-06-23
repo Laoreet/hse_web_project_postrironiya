@@ -390,12 +390,12 @@ const SlotSchedule: React.FC = () => {
                       <td>{el[0]} этаж</td>
                       {time_arr.map((_, i) => (
                       (busyslot!== null && busyslot?.start.endsWith(time_arr[i]) && el[0]==busyslot_wm_floor) ?
-                      <td key={i}><button style={{ background: '#20c997', border: 'none', borderRadius: '5px'}} onClick={() => busySlot(time_arr[i], el[0])}>{time_arr[i]}</button></td>
+                      <td key={i}><button className="btnslot" style={{ background: '#20c997', border: 'none', borderRadius: '5px'}} onClick={() => busySlot(time_arr[i], el[0])}>{time_arr[i]}</button></td>
                       :
                       (el[1][i] === "grey" ?
-                      <td key={i}><button style={{ background: '#6c7788' , border: 'none', borderRadius: '5px'}} onClick={() => busySlot(time_arr[i], el[0])}>{time_arr[i]}</button></td>
+                      <td key={i}><button className="btnslot" style={{ background: '#6c7788' , border: 'none', borderRadius: '5px'}} onClick={() => busySlot(time_arr[i], el[0])}>{time_arr[i]}</button></td>
                       :
-                      <td key={i}><button style={{ background: '#aac4eb', border: 'none', borderRadius: '5px' }} onClick={() => chooseSlot(el[0], time_arr[i])}>{time_arr[i]}</button></td>
+                      <td key={i}><button className="btnslot" style={{ background: '#aac4eb', border: 'none', borderRadius: '5px' }} onClick={() => chooseSlot(el[0], time_arr[i])}>{time_arr[i]}</button></td>
                       )
                       ))
               }

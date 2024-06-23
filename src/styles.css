@@ -709,6 +709,7 @@ body {
   text-align: center;  
   width: 400px;
   height: 120px;  
+  margin-left: 15px;
 }
 
 .slot-info p{
@@ -824,6 +825,7 @@ body {
 table {
   border-collapse: separate;
   border-spacing: 0 10px;
+  width: 100%;
 }
 
 tr {
@@ -908,3 +910,54 @@ tr td button:hover {
   color: #6e6e6e;
   font-size: 13px;  
 }
+
+.table-container {
+  overflow-x: auto; /* Добавляем горизонтальную прокрутку, если содержимое таблицы не помещается на экране */
+}
+
+table {
+  width: 100%; /* Задаем таблице ширину 100% */
+  border-collapse: collapse; /* Склеиваем границы ячеек */
+}
+
+td {
+  padding: 10px; /* Добавляем отступы внутри ячеек для лучшего отображения */
+  white-space: nowrap; /* Запрещаем перенос текста внутри ячеек */
+}
+
+.table-container {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+td {
+  padding: 10px;
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  td {
+    display: block;
+    text-align: center;
+    border-bottom: 0px solid #ccc;
+    width: 100%; /* Задаем ячейкам ширину 100% */
+    box-sizing: border-box; /* Учитываем границы ячеек в расчете ширины */
+  }
+  table
+  {
+    border-radius: 0px;
+    text-align: center;
+  }
+  .btnslot
+  {
+    width: 260px;
+    text-align: center;
+    margin-left: 300%;
+  }
+}
+
+
