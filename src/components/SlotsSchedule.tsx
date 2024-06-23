@@ -318,24 +318,38 @@ const SlotSchedule: React.FC = () => {
     }
   }
 
-  const busySlot = async (time: string, floor: number) => {
-    if (slots)
+  const busySlot = async (time: string|null = null, floor: number|null = null) => {
+    if (time!=null && floor!=null)
+   {
+    let inslots: Boolean = false;
+    if (slots!=null)
     {
-      let wmid: number;
+      if (slots.length>0)
+      {let wmid: number;
       wmid = 0;
       wms.forEach((wm) => {
         if (wm.floor == floor)
           wmid = wm.id;
       })
       slots?.forEach((slot) =>{
-      if (slot.start.endsWith(time) && slot.wm_id==wmid){
-        getUser(user.mail).then((u) =>{
+      if (slot.start.endsWith(time) && slot.wm_id==wmid ){
+        console.log(slot.start);
+        console.log(time);
+        getUser(slot.user_id).then((u) =>{
           toast('Занял пользователь' + '\n' +u?.first_name+' '+ u?.last_name + ', ' +  u?.mail.replace(/,/g, '.') + ', ' + u?.social + ', ' + 'комната '+ u?.room);
+        inslots=true;
         }); 
       }
     })
+    if (!inslots) 
+      toast('Нельзя записаться на этот слот!');
+    }
     }
   }
+  else 
+  toast('Нельзя записаться на этот слот!');
+  }
+   
 
   return (
     <div className='container'>
