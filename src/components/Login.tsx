@@ -57,7 +57,7 @@ function Login() {
       <h2>Авторизация</h2>
       {error && <div className="error">{error}</div>}
       <label>
-        Email:
+      <span>Email:</span>
         <input 
           type="email"
           id="email"
@@ -66,7 +66,7 @@ function Login() {
         />
       </label>
       <label>
-        Password:
+      <span>Password:</span>
         <input 
           type="password"
           value={password}
@@ -76,7 +76,10 @@ function Login() {
       <button type="submit">Login</button>
       <button type="button" onClick={() => setShowForgotPassword(true)}>
         Забыли пароль?
-      </button>
+      </button>       
+
+      <button  type="button" onClick={() => navigator('/register')}>Зарегистрироваться</button>
+  
     </form>
       {showForgotPassword && <ForgotPasswordForm />}
     </div>

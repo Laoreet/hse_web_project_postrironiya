@@ -1,13 +1,15 @@
 /* Логин, регистрация */
 form {
     max-width: 400px;
-    margin: 5px auto;
+    margin: 10px auto;
+    margin-top: 2%;
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 15px;
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
     font-family: Arial, sans-serif;
-    background-color: #f6f6f6;
+    background-color: #ffff;
+    text-align: center;
   }
 
   .error {
@@ -52,10 +54,11 @@ form {
     padding: 10px;
     border: none;
     border-radius: 5px;
-    background-color: #333;
+    background-color: #1d2125;
     color: #fff;
     font-size: 16px;
     cursor: pointer;
+    margin-top: 10px;
     transition: background-color 0.3s ease;
   }
   
@@ -63,10 +66,24 @@ form {
     background-color: #555;
   }
 
+  button[type='button'] {
+    background-color: #ced4da;
+    border: 10px;
+    border-radius: 10%;
+    margin-top: 15px;
+    margin-left: 5%;        
+  }
+
+  button[type='button']:hover {
+    background-color: #555;
+  }
+
   body {
     font-family: Arial, sans-serif;
-    background-color: #e3e8ea; /* добавлен фон страницы */
+    background-color: #f2f2f3; 
+    padding-top: 60px;/* добавлен фон страницы */
   }
+
 
 
 
@@ -89,9 +106,9 @@ form {
   .card {
     flex: 1 1 300px;
     padding: 20px;
-    border: 1px solid #ccc;
+    border: 1px solid #ffff;
     border-radius: 5px;
-    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 4px 4px 4px 4px rgba(0.1, 0.1, 0.1, 0.1);
   }
   
   .card h2 {
@@ -136,13 +153,17 @@ form {
     /* Навбар */
 
   .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 60px;
-    padding: 0 20px;
-    background-color: #333;
-    color: #fff;
+    position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 60px;
+  padding: 0 20px;
+  background-color: #ffffff;
+  color: #fff;
   }
   
   .navbar div {
@@ -157,12 +178,14 @@ form {
   
   .links a {
     display: block;
-    padding: 10px 20px;
+    padding: 10px 20px;    
     text-decoration: none;
     font-size: 18px;
-    color: #fff;
+    color: #1D2125;
     transition: background-color 0.3s ease;
-    border-radius: 25%;
+    border-radius: 5%;
+    margin-right: 10px;
+
   }
   
   .links a:hover {
@@ -297,3 +320,538 @@ form {
     color: #e74c3c;
   }
   
+/*Homepage*/
+
+.home-page {
+  font-family: Arial, sans-serif;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+header {
+  background-color: #f8f8f8;
+  padding: 20px;
+  text-align: center;
+  padding-bottom: 10px;
+}
+
+h1 {
+  color: #333;
+  font-size: 2em;
+}
+
+p {
+  color: #666;
+}
+
+.hero {
+  background-color: #ffff;
+  padding: 20px;
+  text-align: center;
+  margin-bottom: 20px;
+  padding-top: 20px;
+}
+
+.hero h2 {
+  color: #333;
+}
+
+.features {
+  background-color: #eaeaea;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.features h2 {
+  color: #333;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  position: relative; /* added */
+}
+
+.feature-item i {
+  margin-right: 10px;
+}
+
+.tooltip {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px;
+  margin-top: 5px;
+  opacity: 0; /* added */
+  transition: opacity 0.3s; /* added */
+  position: absolute; /* added */
+  bottom: 0; /* added */
+  left: 0; /* added */
+  width: 100%; /* added */
+}
+
+.feature-item:hover .tooltip {
+  opacity: 1; /* added */
+}
+
+.testimonials {
+  background-color: #ffff;
+  padding: 20px;
+  margin-bottom: 40px;
+}
+
+.testimonials h2 {
+  color: #333;
+}
+
+blockquote {
+  margin-bottom: 20px;
+}
+
+blockquote p {
+  font-style: italic;
+}
+
+cite {
+  font-weight: bold;
+}
+
+.hero button {
+  background-color: #0050CF;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: Arial, sans-serif;
+  font-size: 20px;
+}
+
+.testimonials {
+  padding: 20px;
+}
+
+.testimonials h2 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.testimonials blockquote {
+  background-color: #f7f7f7;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.testimonials cite {
+  font-size: 18px;
+  color: #555555;
+}
+
+.tooltip {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px;
+  margin-top: 5px;
+  opacity: 1; /* Изменено значение по умолчанию */
+  transition: opacity 0.3s, transform 0.3s;
+  position: relative; /* Изменено положение на относительное */
+}
+
+.feature-item {
+  cursor: pointer; /* Добавлен стиль указателя для показа, что элемент списка является интерактивным */
+}
+
+.postironia {
+  color: #121825;
+}
+
+.navbar.fixed-top .navbar-brand .logo {
+  max-height: calc(60px - (0.25rem * 2));
+  width: auto; /* add this to maintain aspect ratio */
+}
+
+.navbar.fixed-top .navbar-brand {
+  display: flex;
+  align-items: center;
+}
+
+.navbar.fixed-top .navbar-brand img {
+  height: 100%;
+  object-fit: contain;
+  margin-left: 0.25rem; /* add some margin to the left */
+}
+
+.headerSlots
+{
+  font-size: 25px;
+  max-width: 1200px;
+  color: #1d2125;
+  margin-left: 10%;
+}
+
+
+
+#dropdown {
+  width: 100%;
+  padding: .25rem 1.5rem;
+  font-weight: 400;
+  color: #1d2125;
+  text-align: inherit;
+  white-space: nowrap;
+  background-color: transparent;
+  border: 2;
+
+}
+
+#dropdown option {
+  display: block;
+  width: 100%;
+  padding: .25rem 1.5rem;
+  clear: both;
+  font-weight: 400;
+  color: #1d2125;
+  text-align: inherit;
+  white-space: nowrap;
+  background-color: transparent;
+  border: 2;
+}
+
+.testimonials {
+  text-align: center;
+}
+
+.testimonials h2 {
+  color: #1d2125;
+}
+
+.testimonials .testimonial-card {
+  background-color: #748C8C;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  margin: 10px;
+}
+
+.testimonials .testimonial-card p {
+  margin: 0;
+}
+
+.testimonials .testimonial-card p.author {
+  text-align: right;
+  font-style: italic;
+}
+
+.dropbtn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown:hover .dropbtn {
+  background-color: #3e8e41;
+}
+
+
+.accordion
+{
+  background-color: #ffff;
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
+
+.accordion h2 {
+  color: #333;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 5px;  
+  text-align: center;
+
+}
+
+.question-text{
+  font-size: 18px;
+  color: #555555;
+  font-weight: bold;
+
+}
+
+.footer-container p {
+  margin-bottom: 10px;
+}
+
+.footer-container p {
+  color: #Ffffff99; 
+  padding-top: 20px;
+  margin-top: 0px;  
+}
+
+.footer-container a {
+  color: #Ffffff99; /* secondary color */
+  text-decoration: none;
+}
+
+.footer-container a:hover {
+  color: #fff; /* hover color */
+  background-color: #0050CF;
+}
+
+.important {
+  color: #fff; /* important text color */
+  font-weight: bold;
+}
+
+
+label {
+  display: block; /* Каждая метка на отдельной строке */
+  text-align: left; /* Выравнивание текста по левому краю */
+  margin-bottom: 10px;
+}
+
+input {
+  width: 100%; /* Поля ввода занимают всю доступную ширину */
+  box-sizing: border-box; /* Чтобы ширина включала в себя padding и border */
+  text-align: left; /* Выравнивание текста по центру */
+}
+
+body {
+  min-height: 100%; /* make body element take up at least full height */
+  margin: 0; /* remove default margin */
+  display: flex; /* make body a flex container */
+  flex-direction: column; /* stack elements vertically */
+}
+
+.footer-container {
+  margin-top: 10%;
+  background-color: #0050CF; /* footer background color */
+  padding: 20px;
+  text-align: center;
+}
+
+.slot-container {
+  margin-top: 10px;
+  background-color: #fff; /* white background */
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  font-size: 20px;
+  display: grid; 
+  max-width: 1000px; 
+  margin-left: 10%;  
+}
+
+.slot-info {  
+  align-items: center;  
+  justify-content: space-between;  
+  background-color: #fff; /* white background */
+  padding: 0px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  font-size: 20px;
+  text-align: center;  
+  width: 400px;
+  height: 120px;  
+}
+
+.slot-info p{
+  padding:0px;
+}
+
+.cancel-button {
+  background-color: #252541; /* red */
+  border: none;
+  width: 100px;
+  height: 30px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;  
+  color: #fff;
+}
+
+.important-text{
+  color:#1d2125;
+  font-size: 20px;
+}
+
+.schedule
+{
+  text-align: center;
+}
+
+@media only screen and (max-width: 768px) {
+  .slot-container {
+    max-width: 90%; /* adjust the max-width for mobile devices */
+    margin-left: 5%;
+    margin-right: 5%; /* adjust the margin-left for mobile devices */
+    padding: 10px; /* adjust the padding for mobile devices */
+  }
+  .slot-container select {
+    width: 100%; /* make the dropdown list full-width on mobile devices */
+    height: 30px; /* adjust the height of the dropdown list on mobile devices */
+  }
+}
+
+.navbar-toggle {
+  display: none; /* hide the toggle button on desktop */
+  background-color: #fff;
+  border: none;
+  padding: 10px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.navbar-toggle-icon {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30"%3E%3Cpath stroke="rgba%280, 0, 0, 0.5%29" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"%3E%3C/path%3E%3C/svg%3E');
+  background-size: 20px 20px;
+  background-position: center;
+}
+
+/* Add media query for mobile devices */
+@media only screen and (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .navbar-brand {
+    margin-bottom: 10px;
+  }
+  .links {
+    display: none; /* hide the links on mobile devices */
+    background-color: #fff; /* add white background */
+    padding: 10px; /* add some padding */
+    position: absolute;
+    top: 40px; /* position the links below the toggle button */
+    right: 0; /* align the links to the right */
+  }
+  .links-open {
+    display: block; /* show the links when the toggle button is checked */
+  }
+  .links ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .links li {
+    margin-bottom: 10px;
+  }
+  .links a {
+    color: #333; /* default link color */
+    text-decoration: none;
+  }
+  .links a:hover {
+    background-color: #eee; /* hover background color */
+    color: #666; /* hover text color */
+  }
+  .links a.active {
+    background-color: #ccc; /* active background color */
+    color: #666; /* active text color */
+  }
+  .navbar-toggle {
+    display: block; 
+    position: absolute;
+    top: 10px;
+    right: 50px;/* show the toggle button on mobile devices */
+  }
+}
+
+.headerschedule
+{
+  margin-left: 10%;
+  margin-right: 5%;
+}
+
+table {
+  border-collapse: separate;
+  border-spacing: 0 10px;
+}
+
+tr {
+  background-color: #fff;
+}
+
+tr td:first-child {
+  background-color: #f4f4f4;
+  padding: 10px;
+  border-top: 1px solid #ddd;
+}
+
+tr td:not(:first-child) {
+  padding: 10px;
+  width: calc((100% - 20px) / 8);
+}
+
+tr td button {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+tr td button.busy {
+  background-color: #f690a7;
+  color: #fff;
+}
+
+tr td button.free {
+  background-color: #f4f4f4;
+  border: 1px solid #ddd;
+}
+
+tr td button:hover {
+  background-color: #f5f5f5;
+}
+
+.headerschedule {
+  display: flex;
+  justify-content: space-between;
+  max-height: 200px; /* Примерное значение высоты, которое вы хотите установить */
+  overflow: auto; /* Добавим прокрутку, если содержимое не помещается */
+}
+
+.headerschedule {
+  margin-left: 0%;
+  margin-right: 5%;
+}
+
+@media only screen and (max-width: 600px) {
+  .headerschedule {
+      flex-wrap: wrap; /* Элементы будут переноситься на новую строку */
+      max-height: none; /* Снимаем ограничение высоты */
+      overflow: visible; /* Убираем прокрутку */
+  }
+}
