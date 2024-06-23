@@ -27,6 +27,8 @@ function Profile() {
   const [showEditLastName, setShowEditLastName] = useState(false);
   const [showEditPatName, setShowEditPatName] = useState(false);
   const [showEditDormitory, setShowEditDormitory] = useState(false);
+  const [showEditRoom, setShowEditRoom] = useState(false);
+  const [showEditSocial, setShowEditSocial] = useState(false);
 
 
   useEffect(() => {
@@ -211,6 +213,48 @@ function Profile() {
           </div>
         )}
       </p>
+      
+      <p className="profile-info">
+        Номер комнаты: {user.room || "Не указано"}
+        <PencilSquare onClick={() => setShowEditRoom(true)} />
+        {showEditRoom && (
+          <input
+            type="text"
+            value={editedUser.room}
+            onChange={(e) => setEditedUser({ ...editedUser, room: e.target.value })}
+          />
+        )}
+        {showEditRoom && (
+          <div>
+            <Check onClick={() => {handleSaveChange('room');
+              setShowEditRoom(false);
+            }} />
+            <X onClick={() => setShowEditRoom(false)} />
+          </div>
+        )}
+      </p>
+
+      <p className="profile-info">
+        Социальные сети: {user.social || "Не указано"}
+        <PencilSquare onClick={() => setShowEditSocial(true)} />
+        {showEditSocial && (
+          <input
+            type="text"
+            value={editedUser.social}
+            onChange={(e) => setEditedUser({ ...editedUser, social: e.target.value })}
+          />
+        )}
+        {showEditSocial && (
+          <div>
+            <Check onClick={() => {handleSaveChange('social');
+              setShowEditSocial(false);
+            }} />
+            <X onClick={() => setShowEditSocial(false)} />
+          </div>
+        )}
+      </p>
+
+
       <button className="logout-button" onClick={handleLogout}>Выход</button>
 
       <button className='change-pass-button' onClick={handleShowPasswordChangeForm}>Сменить пароль</button>

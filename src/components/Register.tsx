@@ -19,6 +19,8 @@ function Register() {
   const [verificationCode, setVerificationCode] = useState('');
   const [userCode, setUserCode] = useState('');
   const [codeSent, setCodeSent] = useState(false);
+  const [room, setRoom] = useState('');
+  const [social, setSocial] = useState('');
   const navigator = useNavigate();
 
   useEffect(() => emailjs.init(apiKey.PUBLIC_KEY), [])
@@ -95,6 +97,8 @@ function Register() {
           mail: formattedEmail,
           password: hashed_format(await sha1(password)),
           dormitory: dormitory,
+          room: room,
+          social: social,
         };
         await set(userRef, userData);
 
@@ -180,6 +184,26 @@ function Register() {
               <option value={2}>Бульвар Гагарина, д. 37А</option>
               <option value={3}>Бульвар Гагарина, д. 41</option>
             </select>
+          </label>
+          <label>
+            Номер комнаты:
+            <input
+              type="text"
+              id="room"
+              value={room}
+              onChange={(e) => setRoom(e.target.value)}
+              required
+            />
+          </label>
+          <label>
+            Социальные сети:
+            <input
+              type="text"
+              id="social"
+              value={social}
+              onChange={(e) => setSocial(e.target.value)}
+              required
+            />
           </label>
           <label>
             Код подтверждения:
