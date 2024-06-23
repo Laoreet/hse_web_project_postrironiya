@@ -314,52 +314,61 @@ const SlotSchedule: React.FC = () => {
       }
     }
   }
+
   const busySlot = async () => {
     toast('Занято!');
   }
 
   return (
-    <div className='container'>
-      <h1>Слоты</h1>
-      <h2>Выберите дату</h2>
-      <div>
-        <label htmlFor="dropdown_label">Choose an option:</label>
-        <select id="dropdown" value={selectedOption} onChange={handleSelectChange}>
-          {week?.map((d) => (
-            <option value={d}>{d}</option>
-          ))}
-        </select>
-        <p>You selected: {selectedOption}</p>
-      </div>
-      <ToastContainer />
-      {busyslot !== null ? <div><p>У вас имеется запись на {busyslot?.start} на {busyslot_wm_floor} этаже</p>
-        <button onClick={() => resetSlot()}>Отменить</button>
-      </div> :
-        <div> <p>Вы не записаны на сегодня</p>
-          <p>Выберите слот</p></div>}
-      <div>
-        <h2>Список слотов</h2>
+    <div className='container'>  
+      <div className='headerschedule' style={{ display: 'flex', justifyContent: 'space-between'}}>
+          
+        <h2 className = "headerSlots">Выберите дату</h2>
+        <div className="slot-container" style={{ display: 'inline-block', verticalAlign: 'middle' }}> 
+              <select id="dropdown" value={selectedOption} onChange={handleSelectChange}>
+                {week?.map((d) => (
+                  <option value={d}>{d}</option>
+                ))}
+              </select>          
+        </div>
+        <ToastContainer />
+        {busyslot !== null ? 
+          <div className="slot-info">
+            <p>У вас запись на <span className="important-text">{busyslot?.start}</span> на <span className="important-text">{busyslot_wm_floor} этаже</span></p>
+            <p><button className="cancel-button" onClick={() => resetSlot()}>Отменить</button></p>
+          </div> :
+          <div className="slot-empty"> 
+            <p>Вы не записаны на сегодня              
+              Выберите слот
+            </p>
+          </div>}          
+        </div>
+      
+
+      <div className="slot-container">
+        <h2>Слоты</h2>    
         <br></br>
-        <table>
-          <tbody>
-            {
-              slotMatrix.map((el) => (
-                <tr>
-                  <td>{el[0]} этаж</td>
-                  {time_arr.map((_, i) => (
-                    el[1][i] == "grey" ?
-                      <td key={i}><button style={{ background: 'grey' }} onClick={() => busySlot()}>{time_arr[i]}</button></td>
-                      :
-                      <td key={i}><button style={{ background: 'blue' }} onClick={() => chooseSlot(el[0], time_arr[i])}>{time_arr[i]}</button></td>
-                  )
-                  )
-                  }
-                </tr>
-              ))
-            }</tbody>
-        </table>
+
+          <table>
+            <tbody>
+              {
+                  slotMatrix.map((el) => (
+                    <tr>
+                      <td>{el[0]} этаж</td>
+                      {time_arr.map((_, i) => (
+                        el[1][i] == "grey" ?
+                          <td key={i}><button style={{ background: 'grey' }} onClick={() => busySlot()}>{time_arr[i]}</button></td>
+                          :
+                          <td key={i}><button style={{ background: 'blue' }} onClick={() => chooseSlot(el[0], time_arr[i])}>{time_arr[i]}</button></td>
+                      )
+                      )
+                      }
+                    </tr>
+                  ))
+              }</tbody>
+          </table>        
+        </div>    
       </div>
-    </div>
   );
 };
 
