@@ -19,6 +19,8 @@ function Register() {
   const [verificationCode, setVerificationCode] = useState('');
   const [userCode, setUserCode] = useState('');
   const [codeSent, setCodeSent] = useState(false);
+  const [room, setRoom] = useState(1);
+  const [social, setSocial] = useState('');
   const navigator = useNavigate();
 
   useEffect(() => emailjs.init(apiKey.PUBLIC_KEY), [])
@@ -74,8 +76,8 @@ function Register() {
     // Форматируем email для корректного сохранения в базе данных
     const formattedEmail = email.replace(/,/g, ".").replaceAll(".",",");
 
-    if (!firstName || !lastName || !patName) {
-      setError("Пожалуйста, заполните все поля: Имя, Фамилия.");
+    if (!firstName || !lastName || !patName || !room || !social) {
+      setError("Пожалуйста, заполните все поля: Имя, Фамилия, Комната, Социальные сети.");
       return;
     }
     
@@ -95,6 +97,8 @@ function Register() {
           mail: formattedEmail,
           password: hashed_format(await sha1(password)),
           dormitory: dormitory,
+          room: room,
+          social: social,
         };
         await set(userRef, userData);
 
@@ -180,6 +184,29 @@ function Register() {
               <option value={2}>Бульвар Гагарина, д. 37А</option>
               <option value={3}>Бульвар Гагарина, д. 41</option>
             </select>
+          </label>
+          <label>
+            Номер комнаты:
+            <input
+              type="text"
+              pattern="[0-9]*"
+              id="room"
+              value={room}
+              onChange={(e) => {
+                const value = e.target.value.replace(/[^0-9]/g, '');
+                setRoom(Number(value))}}
+              required
+            />
+          </label>
+          <label>
+            Социальные сети:
+            <input
+              type="text"
+              id="social"
+              value={social}
+              onChange={(e) => setSocial(e.target.value)}
+              required
+            />
           </label>
           <label>
             Код подтверждения:

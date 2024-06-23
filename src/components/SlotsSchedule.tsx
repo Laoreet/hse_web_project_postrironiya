@@ -3,7 +3,7 @@ import { IDormitory, ISlot, IUser, IWM } from '../interfaces';
 import { db } from '../lib/firebase';
 import { getDatabase, ref, child, get, onValue, off, set, remove, update } from "firebase/database";
 import { useNavigate } from 'react-router-dom';
-import { getSlotsByWMids, getWMIdByDormId } from '../lib/firebase-service';
+import { getSlotsByWMids, getUser, getWMIdByDormId } from '../lib/firebase-service';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import 'firebase/database';
@@ -20,6 +20,8 @@ const SlotSchedule: React.FC = () => {
   const [busyslot_wm_floor, setBusySlotWM] = useState<number | null>(0);
   const [slotMatrix, setMatrix] = useState<[number, string[]][]>([]);
   const [week, setWeek] = useState<string[]>([]);
+
+  
 
 
   //пполучить слот в Date формате
@@ -54,6 +56,7 @@ const SlotSchedule: React.FC = () => {
   //функция для получения дней ближайшей недели и помещения в week
   useEffect(() => { // 1
     console.log('week_Set');
+
     let today = set_null_time(new Date());
     let day: number;
     let month: number;
@@ -315,9 +318,38 @@ const SlotSchedule: React.FC = () => {
     }
   }
 
-  const busySlot = async () => {
-    toast('Занято!');
+  const busySlot = async (time: string|null = null, floor: number|null = null) => {
+    if (time!=null && floor!=null)
+   {
+    let inslots: Boolean = false;
+    if (slots!=null)
+    {
+      if (slots.length>0)
+      {let wmid: number;
+      wmid = 0;
+      wms.forEach((wm) => {
+        if (wm.floor == floor)
+          wmid = wm.id;
+      })
+      slots?.forEach((slot) =>{
+      if (slot.start.endsWith(time) && slot.wm_id==wmid ){
+        console.log(slot.start);
+        console.log(time);
+        getUser(slot.user_id).then((u) =>{
+          toast('Занял пользователь' + '\n' +u?.first_name+' '+ u?.last_name + ', ' +  u?.mail.replace(/,/g, '.') + ', ' + u?.social + ', ' + 'комната '+ u?.room);
+        inslots=true;
+        }); 
+      }
+    })
+    if (!inslots) 
+      toast('Нельзя записаться на этот слот!');
+    }
+    }
   }
+  else 
+  toast('Нельзя записаться на этот слот!');
+  }
+   
 
   return (
     <div className='container'>  
