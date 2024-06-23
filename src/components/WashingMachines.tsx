@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { IDormitory, ISlot, IUser, IWM } from '../interfaces';
 import { db } from '../lib/firebase';
-import { getDatabase, ref, child, get, onValue, off } from "firebase/database";
+import { getDatabase, ref, child, get, onValue, off, update } from "firebase/database";
 import { useNavigate } from 'react-router-dom';
 import { getDormitoryAdressById } from '../lib/firebase-service';
 
@@ -9,6 +9,7 @@ const Dashboard: React.FC = () => {
 
   const [user, setUser] = useState<any>(null);
   const [adress, setAdress] = useState<string | null>("");
+
   const navigator = useNavigate();
 
   useEffect(() => {
@@ -22,12 +23,18 @@ const Dashboard: React.FC = () => {
     } else {
       navigator("/login"); // Перенаправляем на страницу авторизации, если пользователь не авторизован
     }
+
   }, []);
 
   const [wms, setWms] = useState<IWM[]>([]);
   const [dormitories, setDormitories] = useState<{ [id: number]: IWM[] }>({});
 
   const dbRef = ref(db);
+
+  function toggleWorking(id: Number, working: Boolean): void {
+    const machineRef = ref(db, `WM/${id}`);
+    update(machineRef, { is_working: Number(!working) });
+  }
 
   useEffect(() => {
     const wmsRef = ref(db, 'WM');
@@ -68,6 +75,18 @@ const Dashboard: React.FC = () => {
                 <span>Этаж: {wm.floor}</span>
                 <span className={`status ${wm.is_working === 1 ? 'working' : 'not-working'}`}>
                   {wm.is_working === 1 ? 'Работает' : 'Не работает'}
+                </span>
+                <span>
+                  {user['status'] === 'admin' && (
+                    <button
+                    type="button" 
+                    style={{ background: '#aac4eb', border: 'none', borderRadius: '5px', marginLeft: '50px' }}
+                    onClick={ (e) => {
+                      toggleWorking(wm.id, Boolean(wm.is_working));
+                    }
+                    }
+                    >
+                    {wm.is_working === 1 ? 'Отключить' : 'Включить'}</button>)}
                 </span>
               </li>
             ))}
