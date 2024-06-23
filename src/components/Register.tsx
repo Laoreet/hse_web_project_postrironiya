@@ -19,7 +19,7 @@ function Register() {
   const [verificationCode, setVerificationCode] = useState('');
   const [userCode, setUserCode] = useState('');
   const [codeSent, setCodeSent] = useState(false);
-  const [room, setRoom] = useState('');
+  const [room, setRoom] = useState(1);
   const [social, setSocial] = useState('');
   const navigator = useNavigate();
 
@@ -76,8 +76,8 @@ function Register() {
     // Форматируем email для корректного сохранения в базе данных
     const formattedEmail = email.replace(/,/g, ".").replaceAll(".",",");
 
-    if (!firstName || !lastName || !patName) {
-      setError("Пожалуйста, заполните все поля: Имя, Фамилия.");
+    if (!firstName || !lastName || !patName || !room || !social) {
+      setError("Пожалуйста, заполните все поля: Имя, Фамилия, Комната, Социальные сети.");
       return;
     }
     
@@ -189,9 +189,12 @@ function Register() {
             Номер комнаты:
             <input
               type="text"
+              pattern="[0-9]*"
               id="room"
               value={room}
-              onChange={(e) => setRoom(e.target.value)}
+              onChange={(e) => {
+                const value = e.target.value.replace(/[^0-9]/g, '');
+                setRoom(Number(value))}}
               required
             />
           </label>

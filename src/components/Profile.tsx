@@ -91,9 +91,9 @@ function Profile() {
   };
 
   const handleSaveChange = async (field: keyof typeof user) => {
-    if (field === 'first_name' || field === 'last_name') {
-      if (!editedUser[field].trim()) {
-        alert('Имя и Фамилия не могут быть пустыми');
+    if (field === 'first_name' || field === 'last_name' || field === 'social') {
+      if (!String(editedUser[field]).trim()) {
+        alert('Имя, Фамилия и Социальные сети не могут быть пустыми');
         return;
       }
     }
@@ -105,7 +105,7 @@ function Profile() {
       user[field] = editedUser[field];
       //user['dormitory'] = Number(user['dormitory']);
       setUser({...user, [field]: editedUser[field]});
-      console.log(field, user[field]);
+      console.log("Изменение:", field, user[field]);
       //setUser({...user, 'dormitory':editedUser.dormitory});
       localStorage.setItem("user", JSON.stringify(user));
       //setEditedUser(user);
@@ -215,13 +215,18 @@ function Profile() {
       </p>
       
       <p className="profile-info">
-        Номер комнаты: {user.room || "Не указано"}
+        Номер комнаты: {String(user.room) || "Не указано"}
         <PencilSquare onClick={() => setShowEditRoom(true)} />
         {showEditRoom && (
           <input
             type="text"
+            pattern="[0-9]*"
             value={editedUser.room}
-            onChange={(e) => setEditedUser({ ...editedUser, room: e.target.value })}
+            onChange={(e) => {
+              const value = e.target.value.replace(/[^0-9]/g, '');
+              setEditedUser({ ...editedUser, room: Number(value) });
+            }}
+            required
           />
         )}
         {showEditRoom && (
@@ -242,6 +247,7 @@ function Profile() {
             type="text"
             value={editedUser.social}
             onChange={(e) => setEditedUser({ ...editedUser, social: e.target.value })}
+            required
           />
         )}
         {showEditSocial && (
