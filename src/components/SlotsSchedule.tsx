@@ -101,7 +101,7 @@ const SlotSchedule: React.FC = () => {
   useEffect(() => {
     console.log('use effect slots update')
     if (slots) {
-      if (selectedOption != null) { 
+      if (selectedOption != null) {
         console.log(selectedOption);
         slots_matrix(selectedOption); }
       else {
@@ -109,18 +109,18 @@ const SlotSchedule: React.FC = () => {
       }
     }
     else {
-       if (selectedOption == null) {
-       let now = set_null_time(new Date());
-      slots_update(now.toDateString());
-       }
+      if (selectedOption == null) {
+        let now = set_null_time(new Date());
+        slots_update(now.toDateString());
+      }
       else
-      slots_update(selectedOption);
+        slots_update(selectedOption);
     }
   }, [slots]);
 
 
   // получение юзера, стиральных машин
-  useEffect(() => { 
+  useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
       const userData = JSON.parse(storedUser);
@@ -166,8 +166,8 @@ const SlotSchedule: React.FC = () => {
 
     if (date_selected !== null) {
       curDate = new Date(date_selected.toString());
-    } 
-    
+    }
+
     let now = new Date();
     if (curDate.getDate() === now.getDate()) {
       curDate.setHours(now.getHours());
@@ -238,22 +238,22 @@ const SlotSchedule: React.FC = () => {
         curDate = set_null_time(curDate);
         let dirty_Slots: ISlot[] = [];
         slotsList.forEach(slot => {
-          let date = get_slot_in_date_format(slot.start)
-          let curdate_end = new Date()
-          if (selectedOption != null) curdate_end = new Date(selectedOption);
-          curdate_end.setHours(23);
-          curdate_end.setMinutes(59);
-          curdate_end.setSeconds(59);
-          if (date > curDate && date < curdate_end) {
-            console.log('adding slot to dirty_slots')
-            dirty_Slots.push({
-              id: String(slot.id),
-              user_id: slot.user_id,
-              wm_id: slot.wm_id,
-              start: slot.start,
-            });
-          }
-        }
+              let date = get_slot_in_date_format(slot.start)
+              let curdate_end = new Date()
+              if (selectedOption != null) curdate_end = new Date(selectedOption);
+              curdate_end.setHours(23);
+              curdate_end.setMinutes(59);
+              curdate_end.setSeconds(59);
+              if (date > curDate && date < curdate_end) {
+                console.log('adding slot to dirty_slots')
+                dirty_Slots.push({
+                  id: String(slot.id),
+                  user_id: slot.user_id,
+                  wm_id: slot.wm_id,
+                  start: slot.start,
+                });
+              }
+            }
         );
         let slots_for_wm: ISlot[] = [];
         wms.forEach((wash_m) => {
@@ -318,6 +318,7 @@ const SlotSchedule: React.FC = () => {
     }
   }
 
+
   const busySlot = async (time: string|null = null, floor: number|null = null) => {
     if (time!=null && floor!=null)
    {
@@ -348,10 +349,12 @@ const SlotSchedule: React.FC = () => {
   }
   else 
   toast('Нельзя записаться на этот слот!');
+
   }
    
 
   return (
+
     <div className='container'>  
       <div className='headerschedule' style={{ display: 'flex', justifyContent: 'space-between'}}>
           
