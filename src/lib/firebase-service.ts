@@ -50,6 +50,7 @@ export const getWM = async (): Promise<IWM[]> => {
   const wms: IWM[] = [];
   snapshot.forEach((childSnapshot) => {
     const childData = childSnapshot.val();
+if (childData.is_working==1)    
     wms.push({
       id: Number(childSnapshot.key),
       dormitory_id: childData.dormitory_id,
