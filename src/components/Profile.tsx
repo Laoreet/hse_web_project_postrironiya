@@ -220,8 +220,12 @@ function Profile() {
         {showEditRoom && (
           <input
             type="text"
+            pattern="[0-9]*"
             value={editedUser.room}
-            onChange={(e) => setEditedUser({ ...editedUser, room: e.target.value })}
+            onChange={(e) => {
+              const value = e.target.value.replace(/[^0-9]/g, '');
+              setEditedUser({ ...editedUser, room: value });
+            }}
           />
         )}
         {showEditRoom && (

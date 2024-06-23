@@ -189,9 +189,12 @@ function Register() {
             Номер комнаты:
             <input
               type="text"
+              pattern="[0-9]*"
               id="room"
               value={room}
-              onChange={(e) => setRoom(e.target.value)}
+              onChange={(e) => {
+                const value = e.target.value.replace(/[^0-9]/g, '');
+                setRoom(value)}}
               required
             />
           </label>
